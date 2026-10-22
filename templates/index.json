@@ -1189,12 +1189,12 @@
             "layout_type_mobile": "carousel",
             "columns_desktop": "3",
             "columns_mobile": "1",
-            "show_next_slide_preview_on_desktop": true,
+            "show_next_slide_preview_on_desktop": false,
             "show_next_slide_preview_on_mobile": true,
             "product_gap_desktop": 28,
             "product_gap_mobile": 12,
             "show_navigation_on_desktop": true,
-            "show_navigation_on_mobile": true,
+            "show_navigation_on_mobile": false,
             "navigation_position": "inside",
             "navigation_style": "secondary",
             "navigation_icon": "chevron",
@@ -1202,13 +1202,13 @@
             "pagination_type": "progress_bar",
             "show_pagination_on_desktop": true,
             "pagination_top_padding_desktop": 24,
-            "show_pagination_on_mobile": true,
+            "show_pagination_on_mobile": false,
             "pagination_top_padding_mobile": 24,
             "pagination_limit_width": false,
             "pagination_max_width": 600,
             "autoplay": true,
             "autoplay_pause_on_hover": true,
-            "autoplay_speed": 4
+            "autoplay_speed": 5
           },
           "blocks": {
             "product-card": {
