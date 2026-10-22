@@ -1232,7 +1232,7 @@
         "section_width": "page_width",
         "desktop_alignment": "left",
         "mobile_alignment": "left",
-        "gap_desktop": 32,
+        "gap_desktop": 48,
         "gap_mobile": 24,
         "color_scheme": "scheme-1",
         "padding_top": 80,
