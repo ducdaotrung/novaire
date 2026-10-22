@@ -3104,6 +3104,270 @@
         "padding_top_mobile": 0,
         "padding_bottom_mobile": 56
       }
+    },
+    "featured_collection_banner_custom": {
+      "type": "featured-collection-banner-custom",
+      "blocks": {
+        "left-banner": {
+          "type": "banner",
+          "settings": {
+            "link": "",
+            "open_in_new_tab": false,
+            "background_type": "image",
+            "image": "shopify://shop_images/clare-cat-5.png",
+            "show_overlay": false,
+            "device": "desktop",
+            "image_ratio_desktop": "portrait",
+            "image_ratio_custom_width_desktop": 16,
+            "image_ratio_custom_height_desktop": 9,
+            "image_ratio_mobile": "square",
+            "image_ratio_custom_width_mobile": 16,
+            "image_ratio_custom_height_mobile": 9,
+            "position_desktop": "bottom_left",
+            "position_mobile": "bottom_left",
+            "gap_desktop": 8,
+            "gap_mobile": 8,
+            "corner_radius": "custom",
+            "custom_corner_radius": 10,
+            "color_scheme": "scheme-3",
+            "padding_top": 24,
+            "padding_bottom": 24,
+            "padding_left": 24,
+            "padding_right": 24,
+            "customize_mobile_padding": false,
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 0,
+            "padding_left_mobile": 0,
+            "padding_right_mobile": 0
+          },
+          "blocks": {
+            "text_6E4Tkm": {
+              "type": "text",
+              "name": "t:general.text",
+              "settings": {
+                "text": "<p>NEW</p>",
+                "text_size": "display",
+                "height_limit": "none",
+                "text_color": "",
+                "width": "fit",
+                "max_width": 640,
+                "customize_mobile_size": false,
+                "width_mobile": "fit",
+                "max_width_mobile": 480,
+                "padding_top": 0,
+                "padding_bottom": 0,
+                "padding_left": 0,
+                "padding_right": 0,
+                "customize_mobile_padding": false,
+                "padding_top_mobile": 0,
+                "padding_bottom_mobile": 0,
+                "padding_left_mobile": 0,
+                "padding_right_mobile": 0
+              },
+              "blocks": {}
+            },
+            "heading": {
+              "type": "heading",
+              "settings": {
+                "text": "<p>Your Skin, But Better</p>",
+                "heading_size": "display",
+                "custom_heading_size": 24,
+                "html_tag": "h3",
+                "text_color": "",
+                "width": "fill",
+                "max_width": 640,
+                "customize_mobile_size": false,
+                "width_mobile": "fit",
+                "max_width_mobile": 480,
+                "padding_top": 0,
+                "padding_bottom": 16,
+                "padding_left": 0,
+                "padding_right": 0,
+                "customize_mobile_padding": false,
+                "padding_top_mobile": 0,
+                "padding_bottom_mobile": 0,
+                "padding_left_mobile": 0,
+                "padding_right_mobile": 0
+              },
+              "blocks": {}
+            },
+            "button": {
+              "type": "button",
+              "settings": {
+                "button_label": "Shop Now",
+                "button_link": "",
+                "button_open_in_new_tab": false,
+                "button_style": "secondary",
+                "show_icon": false,
+                "icon": "arrow_right",
+                "icon_position": "after",
+                "icon_size": "inherit",
+                "icon_width": 20,
+                "width": "fit",
+                "width_mobile": "fit",
+                "padding_top": 0,
+                "padding_bottom": 0,
+                "padding_left": 0,
+                "padding_right": 0,
+                "customize_mobile_padding": false,
+                "padding_top_mobile": 0,
+                "padding_bottom_mobile": 0,
+                "padding_left_mobile": 0,
+                "padding_right_mobile": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_6E4Tkm",
+            "heading",
+            "button"
+          ]
+        },
+        "header": {
+          "type": "header",
+          "static": true,
+          "settings": {
+            "width": "fill",
+            "max_width": 750,
+            "customize_mobile_size": false,
+            "width_mobile": "fit",
+            "max_width_mobile": 480,
+            "inherit_alignment": false,
+            "alignment": "left",
+            "customize_mobile_alignment": true,
+            "alignment_mobile": "center",
+            "gap_desktop": 16,
+            "gap_mobile": 12,
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "padding_left": 0,
+            "padding_right": 0,
+            "customize_mobile_padding": false,
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 0,
+            "padding_left_mobile": 0,
+            "padding_right_mobile": 0
+          },
+          "blocks": {
+            "heading": {
+              "type": "heading",
+              "settings": {
+                "text": "<p>Effortless, Everyday Moisturizers</p>",
+                "heading_size": "display",
+                "custom_heading_size": 24,
+                "html_tag": "h2",
+                "text_color": "",
+                "width": "fit",
+                "max_width": 640,
+                "customize_mobile_size": false,
+                "width_mobile": "fit",
+                "max_width_mobile": 480,
+                "padding_top": 0,
+                "padding_bottom": 0,
+                "padding_left": 0,
+                "padding_right": 0,
+                "customize_mobile_padding": false,
+                "padding_top_mobile": 0,
+                "padding_bottom_mobile": 0,
+                "padding_left_mobile": 0,
+                "padding_right_mobile": 0
+              },
+              "blocks": {}
+            },
+            "text_cyDz37": {
+              "type": "text",
+              "name": "t:general.text",
+              "settings": {
+                "text": "<p>We formulate for maximum potency with only nutrient-rich, ingredients to your skin.</p>",
+                "text_size": "display",
+                "height_limit": "none",
+                "text_color": "",
+                "width": "fit",
+                "max_width": 640,
+                "customize_mobile_size": false,
+                "width_mobile": "fit",
+                "max_width_mobile": 480,
+                "padding_top": 0,
+                "padding_bottom": 0,
+                "padding_left": 0,
+                "padding_right": 0,
+                "customize_mobile_padding": false,
+                "padding_top_mobile": 0,
+                "padding_bottom_mobile": 0,
+                "padding_left_mobile": 0,
+                "padding_right_mobile": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "heading",
+            "text_cyDz37"
+          ]
+        },
+        "product-list": {
+          "type": "product-list",
+          "static": true,
+          "settings": {
+            "use_recommendations": false,
+            "recommendation_type": "related",
+            "products": [],
+            "collection": "trending-now",
+            "max_products": 6,
+            "layout_type": "carousel",
+            "columns_desktop": "3",
+            "columns_mobile": "1",
+            "show_next_slide_preview_on_desktop": true,
+            "show_next_slide_preview_on_mobile": true,
+            "product_gap_desktop": 28,
+            "product_gap_mobile": 12,
+            "show_navigation_on_desktop": true,
+            "navigation_position": "inside",
+            "navigation_style": "secondary",
+            "navigation_icon": "chevron",
+            "navigation_behavior": "show_on_hover",
+            "show_pagination_on_desktop": true,
+            "pagination_type": "progress_bar",
+            "pagination_top_padding_desktop": 24,
+            "pagination_top_padding_mobile": 24,
+            "pagination_limit_width": false,
+            "pagination_max_width": 600,
+            "autoplay": true,
+            "autoplay_pause_on_hover": true,
+            "autoplay_speed": 4
+          },
+          "blocks": {
+            "product-card": {
+              "type": "product-card",
+              "static": true,
+              "settings": {
+                "color_type": "inherit",
+                "color_scheme": ""
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": []
+        }
+      },
+      "block_order": [
+        "left-banner"
+      ],
+      "name": "Featured collection: Banner (custom)",
+      "settings": {
+        "section_width": "page_width",
+        "desktop_alignment": "left",
+        "mobile_alignment": "left",
+        "gap_desktop": 32,
+        "gap_mobile": 24,
+        "color_scheme": "scheme-1",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
+      }
     }
   },
   "order": [
@@ -3119,6 +3383,7 @@
     "hero_kCqAYy",
     "custom_section_QhnKPR",
     "blog_posts_tCVehf",
-    "gallery_image_grid_yDLyGk"
+    "gallery_image_grid_yDLyGk",
+    "featured_collection_banner_custom"
   ]
 }
