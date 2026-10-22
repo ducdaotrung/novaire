@@ -339,7 +339,7 @@
         "columns_mobile": "1",
         "show_next_slide_preview_on_desktop": false,
         "show_next_slide_preview_on_mobile": true,
-        "product_gap_desktop": 24,
+        "product_gap_desktop": 28,
         "product_gap_mobile": 12,
         "show_navigation_on_desktop": true,
         "navigation_position": "inside",
