@@ -175,7 +175,7 @@
             "gap_desktop": 0,
             "gap_mobile": 0,
             "padding_top": 0,
-            "padding_bottom": 0,
+            "padding_bottom": 20,
             "padding_left": 0,
             "padding_right": 0,
             "customize_mobile_padding": false,
@@ -185,19 +185,20 @@
             "padding_right_mobile": 0
           },
           "blocks": {
-            "item_6": {
-              "type": "heading",
+            "eyebrow_3G8WL6": {
+              "type": "eyebrow",
+              "name": "t:general.eyebrow",
               "settings": {
                 "text": "<p>NEW ARRIVALS</p>",
-                "heading_size": "display",
-                "custom_heading_size": 24,
-                "html_tag": "h2",
-                "text_color": "",
-                "width": "fit",
-                "max_width": 640,
-                "customize_mobile_size": false,
-                "width_mobile": "fit",
-                "max_width_mobile": 480,
+                "font_size": "display",
+                "custom_font_size": 16,
+                "color": "",
+                "show_background": false,
+                "show_icon": false,
+                "icon": "circle",
+                "border_thickness": 0,
+                "corner_radius": "square",
+                "color_scheme": "scheme-1",
                 "padding_top": 0,
                 "padding_bottom": 0,
                 "padding_left": 0,
@@ -212,7 +213,7 @@
             }
           },
           "block_order": [
-            "item_6"
+            "eyebrow_3G8WL6"
           ]
         },
         "item_7": {
@@ -306,7 +307,7 @@
             "icon_width": 20,
             "width": "fit",
             "width_mobile": "fit",
-            "padding_top": 0,
+            "padding_top": 20,
             "padding_bottom": 0,
             "padding_left": 0,
             "padding_right": 0,
@@ -330,7 +331,7 @@
       "settings": {
         "load_all_tabs": true,
         "section_width": "page_width",
-        "gap_desktop": 28,
+        "gap_desktop": 24,
         "gap_mobile": 20,
         "max_products": 8,
         "layout_type": "carousel",
