@@ -783,6 +783,187 @@
         "padding_bottom_mobile": 56
       }
     },
+    "testimonials_horizontal_custom_zcgEGa": {
+      "type": "testimonials-horizontal-custom",
+      "blocks": {
+        "carousel_DHNk93": {
+          "type": "carousel",
+          "settings": {
+            "columns_desktop": "1",
+            "columns_mobile": "1",
+            "show_next_slide_preview_on_desktop": false,
+            "show_next_slide_preview_on_mobile": false,
+            "gap_desktop": 40,
+            "gap_mobile": 24,
+            "width": "custom",
+            "custom_width": 69,
+            "show_navigation_on_desktop": false,
+            "navigation_position": "outside",
+            "navigation_style": "primary",
+            "navigation_icon": "arrow",
+            "navigation_behavior": "show_on_hover",
+            "pagination_type": "bullets",
+            "show_pagination_on_desktop": false,
+            "pagination_padding_desktop": 40,
+            "show_pagination_on_mobile": false,
+            "pagination_padding_mobile": 30,
+            "pagination_limit_width": false,
+            "pagination_max_width": 200,
+            "autoplay": false,
+            "pause_on_hover": true,
+            "autoplay_speed": 4,
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "customize_mobile_padding": false,
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 0
+          },
+          "blocks": {
+            "slide_xGkWkf": {
+              "type": "slide",
+              "settings": {
+                "direction": "vertical",
+                "alignment": "center",
+                "position": "top",
+                "position_horizontal": "top",
+                "horizontal_alignment": "left",
+                "customize_mobile_alignment": true,
+                "alignment_mobile": "left",
+                "gap_desktop": 20,
+                "gap_mobile": 12,
+                "height": "fill",
+                "border_thickness": 0,
+                "corner_radius": "square",
+                "custom_radius": 20,
+                "shadow": "none",
+                "background_media": "none",
+                "show_overlay": false,
+                "overlay_color": "#00000080",
+                "backdrop_blur": 0,
+                "appearance_type": "inherit",
+                "color_scheme": "",
+                "link": "",
+                "open_in_new_tab": false,
+                "padding_top": 0,
+                "padding_bottom": 0,
+                "padding_left": 0,
+                "padding_right": 0,
+                "customize_mobile_padding": false,
+                "padding_top_mobile": 0,
+                "padding_bottom_mobile": 0,
+                "padding_left_mobile": 0,
+                "padding_right_mobile": 0
+              },
+              "blocks": {
+                "heading_7f6Xwb": {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>OVER 100 BRANDS OF DESIGNERS</p>",
+                    "heading_size": "display",
+                    "custom_heading_size": 24,
+                    "html_tag": "h1",
+                    "text_color": "",
+                    "width": "fill",
+                    "max_width": 640,
+                    "customize_mobile_size": false,
+                    "width_mobile": "fill",
+                    "max_width_mobile": 480,
+                    "padding_top": 0,
+                    "padding_bottom": 0,
+                    "padding_left": 0,
+                    "padding_right": 0,
+                    "customize_mobile_padding": false,
+                    "padding_top_mobile": 0,
+                    "padding_bottom_mobile": 0,
+                    "padding_left_mobile": 0,
+                    "padding_right_mobile": 0
+                  },
+                  "blocks": {}
+                },
+                "text_Dchhwk": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>From flowy floral midi dresses to sleek evening gowns, every piece is designed to express your individuality and confidence. Our collection brings together global designers who blend creativity, comfort, and style — so you can look and feel your best wherever you go. Find your next favorite look and make every day.</p>",
+                    "text_size": "display",
+                    "custom_font_size": 16,
+                    "height_limit": "none",
+                    "text_color": "",
+                    "width": "fill",
+                    "max_width": 640,
+                    "customize_mobile_size": false,
+                    "width_mobile": "fill",
+                    "max_width_mobile": 480,
+                    "padding_top": 0,
+                    "padding_bottom": 12,
+                    "padding_left": 0,
+                    "padding_right": 0,
+                    "customize_mobile_padding": false,
+                    "padding_top_mobile": 0,
+                    "padding_bottom_mobile": 0,
+                    "padding_left_mobile": 0,
+                    "padding_right_mobile": 0
+                  },
+                  "blocks": {}
+                },
+                "button_UmgTmC": {
+                  "type": "button",
+                  "name": "t:general.button",
+                  "settings": {
+                    "button_label": "DISCOVER MORE",
+                    "button_link": "",
+                    "button_open_in_new_tab": false,
+                    "button_style": "primary",
+                    "show_icon": false,
+                    "icon": "arrow_right",
+                    "icon_position": "after",
+                    "icon_size": "inherit",
+                    "icon_width": 20,
+                    "width": "fit",
+                    "width_mobile": "fit",
+                    "padding_top": 0,
+                    "padding_bottom": 0,
+                    "padding_left": 0,
+                    "padding_right": 0,
+                    "customize_mobile_padding": false,
+                    "padding_top_mobile": 0,
+                    "padding_bottom_mobile": 0,
+                    "padding_left_mobile": 0,
+                    "padding_right_mobile": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "heading_7f6Xwb",
+                "text_Dchhwk",
+                "button_UmgTmC"
+              ]
+            }
+          },
+          "block_order": [
+            "slide_xGkWkf"
+          ]
+        }
+      },
+      "block_order": [
+        "carousel_DHNk93"
+      ],
+      "name": "t:general.testimonials_horizontal_custom_preset",
+      "settings": {
+        "section_width": "page_width",
+        "alignment": "center",
+        "customize_mobile_alignment": false,
+        "alignment_mobile": "center",
+        "gap_desktop": 40,
+        "gap_mobile": 32,
+        "color_scheme": "scheme-2",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
+      }
+    },
     "featured_collection_banner_8cjkEm": {
       "type": "featured-collection-banner",
       "blocks": {
@@ -2929,6 +3110,7 @@
     "summer_slideshow",
     "new_arrivals",
     "shop_by_category",
+    "testimonials_horizontal_custom_zcgEGa",
     "featured_collection_banner_8cjkEm",
     "custom_section_ePdeKV",
     "featured_collection_qVbVaf",
