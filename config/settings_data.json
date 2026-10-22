@@ -9,9 +9,9 @@
  */
 {
   "current": {
-    "logo": "shopify://shop_images/CLARE.png",
-    "logo_width": 96,
-    "logo_width_mobile": 80,
+    "logo": "shopify://shop_images/logo-novaire.png",
+    "logo_width": 132,
+    "logo_width_mobile": 100,
     "default_color_scheme": "scheme-1",
     "max_page_width": 1600,
     "layout_desktop_margin": 48,
