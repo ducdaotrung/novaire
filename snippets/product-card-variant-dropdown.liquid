@@ -1,0 +1,37 @@
+{% doc %}
+  Plain variant selector for product cards without a color option.
+  @param {product} product - Product with selectable variants
+  @param {number} [image_width] - Card image width
+  @param {number} [image_height] - Card image height
+{% enddoc %}
+{% assign card_selected_variant = product.selected_or_first_available_variant %}
+<swatches-variant-picker-component class="product-card__swatches-variant-picker" data-product-url="{{ product.url | escape }}">
+  <form autocomplete="off">
+    <div class="product-card__variant-dropdown">
+      <select data-product-card-variant-select aria-label="{{ 'products.choose_options' | t | escape }}">
+        {% for variant in product.variants %}
+          <option
+            value="{{ variant.id }}"
+            data-variant-id="{{ variant.id }}"
+            data-product-url="{{ product.url | append: '?variant=' | append: variant.id | escape }}"
+            data-inventory-quantity="{{ variant.inventory_quantity }}"
+            data-inventory-management="{{ variant.inventory_management | escape }}"
+            data-inventory-policy="{{ variant.inventory_policy | escape }}"
+            {% if variant.id == card_selected_variant.id %}selected{% endif %}
+            {% unless variant.available %}disabled{% endunless %}
+          >{{ variant.title | escape }}{% unless variant.available %} — {{ 'products.sold_out' | t }}{% endunless %}</option>
+        {% endfor %}
+      </select>
+      <span class="product-card__variant-chevron" aria-hidden="true">{% render 'icon', icon: 'chevron-down', bare: true %}</span>
+    </div>
+  </form>
+  {% for variant in product.variants %}
+    {% assign variant_image = variant.featured_image | default: product.featured_image %}
+    <template data-product-card-variant="{{ variant.id }}">
+      {% render 'product-card-price', item: variant %}
+      {% if variant_image != blank %}
+        {% render 'image', image: variant_image, class: 'product-card__image', width: image_width, height: image_height, crop: 'center', alt: product.title %}
+      {% endif %}
+    </template>
+  {% endfor %}
+</swatches-variant-picker-component>

@@ -1,0 +1,17 @@
+{% doc %}
+  Maps relative ES-module dependencies to Shopify's current versioned asset URLs.
+  Render before any module script so stale unversioned CDN modules cannot mix
+  with freshly updated consumers. Keep ordinary relative imports in source.
+{% enddoc %}
+{%- assign dependencies = 'swiper-loader.js,swiper-carousel.js,carousel-runtime.js,button-loading.js,money-format.js,swiper-12.2.0-a11y.min.mjs,swiper-12.2.0-classes-to-selector.min.mjs,swiper-12.2.0-create-element-if-not-defined.min.mjs,swiper-12.2.0-effect-fade.min.mjs,swiper-12.2.0-effect-init.min.mjs,swiper-12.2.0-effect-target.min.mjs,swiper-12.2.0-effect-virtual-transition-end.min.mjs,swiper-12.2.0-pagination.min.mjs,swiper-12.2.0-ssr-window.esm.min.mjs,swiper-12.2.0-swiper-core.min.mjs,swiper-12.2.0-thumbs.min.mjs,swiper-12.2.0-utils.min.mjs,swiper-12.2.0.min.mjs' | split: ',' -%}
+<script type="importmap" data-theme-import-map>
+{
+  "imports": {
+    {%- for dependency in dependencies -%}
+      {%- assign asset_source = dependency | asset_url -%}
+      {%- assign asset_key = asset_source | split: '?' | first -%}
+      {{ asset_key | json }}: {{ asset_source | json }}{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  }
+}
+</script>

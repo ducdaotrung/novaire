@@ -1,0 +1,241 @@
+{% doc %}
+  Renders the footer localization controls using the same country and language
+  interaction contract as the header localization block. The footer keeps its
+  own Typography setting so it can use the complete body text scale.
+
+  @example
+  {% content_for 'block', type: 'localization', id: 'localization' %}
+{% enddoc %}
+
+{% liquid
+  assign localization_trigger = block.settings.dropdown_trigger | default: 'click'
+  unless localization_trigger == 'click' or localization_trigger == 'hover'
+    assign localization_trigger = 'click'
+  endunless
+
+  assign localization_font_size = block.settings.font_size | default: 'md'
+  unless localization_font_size == 'xs' or localization_font_size == 'sm' or localization_font_size == 'md' or localization_font_size == 'lg' or localization_font_size == 'xl' or localization_font_size == 'xxl'
+    assign localization_font_size = 'md'
+  endunless
+
+  assign show_country_selector = true
+  if block.settings.show_country_selector == false
+    assign show_country_selector = false
+  endif
+
+  assign show_country_name = false
+  if block.settings.show_country_name
+    assign show_country_name = true
+  endif
+
+  assign show_country_flag = true
+  if block.settings.show_country_flag == false
+    assign show_country_flag = false
+  endif
+
+  assign show_language_selector_desktop = false
+  if block.settings.show_language_selector
+    assign show_language_selector_desktop = true
+  endif
+
+  assign show_current_language = false
+  if localization.language != blank
+    assign show_current_language = true
+  endif
+
+  assign country_selector_label = 'localization.country_label' | t
+  assign language_selector_label = 'localization.language_label' | t
+  assign localization_id_prefix = 'FooterLocalization-' | append: section.id | append: '-' | append: block.id
+  assign country_dialog_id = localization_id_prefix | append: '-country'
+  assign language_dialog_id = localization_id_prefix | append: '-language'
+
+  assign has_country_selector = false
+  if show_country_selector and localization.available_countries.size > 1
+    assign has_country_selector = true
+  endif
+
+  assign has_language_selector = false
+  if show_current_language and localization.available_languages.size > 1
+    assign has_language_selector = true
+  endif
+
+  assign has_localization = false
+  if has_country_selector or has_language_selector
+    assign has_localization = true
+  endif
+
+  assign localization_class = 'localization-block header-localization header-localization--trigger-' | append: localization_trigger | append: ' body-text body-' | append: localization_font_size
+  unless show_language_selector_desktop
+    assign localization_class = localization_class | append: ' header-localization--hide-language-desktop'
+    if has_country_selector == false and has_language_selector
+      assign localization_class = localization_class | append: ' header-localization--mobile-language-only'
+    endif
+  endunless
+%}
+
+{% if has_localization or request.design_mode %}
+  <div class="{{ localization_class }}" {{ block.shopify_attributes }}>
+    {% if has_localization %}
+      {% if has_country_selector %}
+        <details class="header-localization__details" data-header-submenu-trigger="{{ localization_trigger }}" data-localization-dialog-id="{{ country_dialog_id }}">
+          <summary class="header-localization__summary" aria-controls="{{ country_dialog_id }}" aria-expanded="false">
+            <span class="header-localization__country">
+              {% if show_country_flag %}
+                {{ localization.country | image_url: width: 24 | image_tag: class: 'header-localization__flag', alt: '' }}
+              {% endif %}
+              {% if show_country_name %}
+                <span>{{ localization.country.name }}</span>
+              {% else %}
+                <span>{{ localization.country.currency.iso_code }} {{ localization.country.currency.symbol }}</span>
+              {% endif %}
+            </span>
+            {% render 'icon', icon: 'chevron-down', class: 'header-localization__icon' %}
+          </summary>
+
+          <div class="header-localization__panel header-localization__desktop-panel color-scheme section-color-scope scheme-1">
+            {% form 'localization', class: 'header-localization__form' %}
+              <input type="hidden" name="return_to" value="{{ request.path }}">
+              <div class="header-localization__country-list">
+                {% for country in localization.available_countries %}
+                  <button
+                    class="header-localization__country-option{% if country.iso_code == localization.country.iso_code %} is-selected{% endif %}"
+                    type="submit"
+                    name="country_code"
+                    value="{{ country.iso_code }}"
+                  >
+                    {% if show_country_flag %}
+                      {{ country | image_url: width: 24 | image_tag: class: 'header-localization__flag', alt: '' }}
+                    {% endif %}
+                    <span class="header-localization__country-name">{{ country.name }}</span>
+                    <span class="header-localization__country-currency">{{ country.currency.iso_code }} {{ country.currency.symbol }}</span>
+                  </button>
+                {% endfor %}
+              </div>
+            {% endform %}
+          </div>
+          {% render 'localization-overlay', id: country_dialog_id, selector_type: 'country', localization: localization, label: country_selector_label, show_country_flag: show_country_flag %}
+        </details>
+      {% endif %}
+
+      {% if has_language_selector %}
+        <details class="header-localization__details header-localization__details--language" data-header-submenu-trigger="{{ localization_trigger }}" data-localization-dialog-id="{{ language_dialog_id }}">
+          <summary class="header-localization__summary" aria-controls="{{ language_dialog_id }}" aria-expanded="false">
+            <span class="header-localization__language">{{ localization.language.endonym_name }}</span>
+            {% render 'icon', icon: 'chevron-down', class: 'header-localization__icon' %}
+          </summary>
+          <div class="header-localization__panel header-localization__desktop-panel color-scheme section-color-scope scheme-1">
+            {% form 'localization', class: 'header-localization__form' %}
+              <input type="hidden" name="return_to" value="{{ request.path }}">
+              <div class="header-localization__language-list">
+                {% for language in localization.available_languages %}
+                  <button
+                    class="header-localization__language-option{% if language.iso_code == localization.language.iso_code %} is-selected{% endif %}"
+                    type="submit"
+                    name="language_code"
+                    value="{{ language.iso_code }}"
+                  >{{ language.endonym_name }}</button>
+                {% endfor %}
+              </div>
+            {% endform %}
+          </div>
+          {% render 'localization-overlay', id: language_dialog_id, selector_type: 'language', localization: localization, label: language_selector_label %}
+        </details>
+      {% endif %}
+    {% else %}
+      <span class="header-localization__placeholder">
+        {% if show_current_language %}{{ localization.language.endonym_name }}{% else %}{{ cart.currency.iso_code | default: 'USD' }}{% endif %}
+      </span>
+    {% endif %}
+  </div>
+{% endif %}
+
+{% render 'localization-styles' %}
+
+{% schema %}
+{
+  "name": "t:general.localization",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:general.layout"
+    },
+    {
+      "type": "select",
+      "id": "dropdown_trigger",
+      "label": "t:labels.dropdown_trigger",
+      "options": [
+        { "value": "click", "label": "t:options.dropdown_trigger.click" },
+        { "value": "hover", "label": "t:options.dropdown_trigger.hover" }
+      ],
+      "default": "click"
+    },
+    {
+      "type": "header",
+      "content": "t:general.country_region"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_country_selector",
+      "label": "t:labels.show_country_selector",
+      "info": "t:info.localization_manage_countries",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_country_name",
+      "label": "t:labels.show_country_name",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_country_flag",
+      "label": "t:labels.show_country_flag",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:general.language"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_language_selector",
+      "label": "t:labels.show_language_selector",
+      "info": "t:info.localization_manage_languages",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "t:general.typography"
+    },
+    {
+      "type": "select",
+      "id": "font_size",
+      "label": "t:labels.font_size",
+      "options": [
+        { "value": "xs", "label": "t:options.text_size.xs" },
+        { "value": "sm", "label": "t:options.text_size.sm" },
+        { "value": "md", "label": "t:options.text_size.md" },
+        { "value": "lg", "label": "t:options.text_size.lg" },
+        { "value": "xl", "label": "t:options.text_size.xl" },
+        { "value": "xxl", "label": "t:options.text_size.xxl" }
+      ],
+      "default": "md"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:general.localization",
+      "category": "t:general.footer",
+      "settings": {
+        "dropdown_trigger": "click",
+        "show_country_selector": true,
+        "show_country_name": false,
+        "show_country_flag": true,
+        "show_language_selector": false,
+        "font_size": "md"
+      }
+    }
+  ]
+}
+{% endschema %}

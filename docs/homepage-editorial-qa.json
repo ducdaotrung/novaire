@@ -1,0 +1,70 @@
+{
+  "store": "beae-duc-k4mqivfe.myshopify.com",
+  "theme": 156415066304,
+  "backup": "C:\\Users\\User\\AppData\\Local\\Temp\\clare-home-20261019-120333",
+  "plan": {
+    "placement": "templates/index.json; preserve existing original section instances",
+    "ownership": "Theme settings: typography, schemes, buttons; sections: spacing/width/layout; dynamic blocks: content/media; existing slideshow/tab/carousel runtime: interaction",
+    "composition": [
+      {
+        "type": "slideshow",
+        "blocks": "one classic image slide; dynamic eyebrow, heading, button"
+      },
+      {
+        "type": "collection-tabs-editorial",
+        "basedOn": "collection-tabs",
+        "blocks": "dynamic header, tab-layout, three collection-tab blocks, view-all button",
+        "context": "merchant-selected collection per tab; placeholder until assigned"
+      },
+      {
+        "type": "collection-list-editorial",
+        "basedOn": "collection-list",
+        "blocks": "dynamic header and four independently editable collection-category blocks",
+        "context": "merchant-selected image or collection image fallback; editable CTA destination"
+      }
+    ],
+    "limits": "No new max_blocks or per-type limits; category items wrap into additional rows",
+    "responsive": "four products/categories desktop; two mobile; one responsive DOM",
+    "appPolicy": "explicit block allow-lists, no app blocks"
+  },
+  "checks": {
+    "contract": {
+      "status": "pass"
+    },
+    "schema": {
+      "status": "pass",
+      "ranges": 1557,
+      "directAndNestedBlockCategories": "audited"
+    },
+    "liquid": {
+      "status": "pass",
+      "evidence": "Shopify development upload accepted"
+    },
+    "css": {
+      "status": "pass",
+      "evidence": "desktop/mobile no horizontal overflow; category grid 4/2 columns"
+    },
+    "js": {
+      "status": "pass",
+      "evidence": "mouse tab selection and ArrowRight select expected tab; 23 existing regression tests pass"
+    },
+    "responsive": {
+      "status": "pass",
+      "evidence": "1250px desktop and 390px mobile preview"
+    },
+    "accessibility": {
+      "status": "pass",
+      "scope": "tab selection and arrow keys, shared CTA links; full audit pending final media"
+    },
+    "themeEditor": {
+      "status": "blocked",
+      "reason": "Browser session redirects to Shopify sign-in; add/remove/reorder/reload not verified"
+    },
+    "release": {
+      "status": "blocked",
+      "reason": "Original banner/category images and fashion collection assignments not supplied; currently placeholders and sample /collections/all CTA destinations"
+    }
+  },
+  "migration": "No original collection-tabs/list static slots converted; new editorial compositions added to empty homepage. No remote instances require migration.",
+  "runtime": "Tabs load eagerly by default for the fully dynamic editorial composition. Existing original collection-tabs deferred behavior preserved unless new load_all_tabs setting enabled. Existing runtime handles section unload/load and block selection; editor lifecycle still requires runtime QA."
+}

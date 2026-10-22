@@ -1,0 +1,864 @@
+{% doc %}
+  Renders the fixed navigation composition for a Collection Tabs section.
+  Collection Tab blocks are supplied by the section at the same level as this
+  block; this block owns tab navigation, typography, spacing and interaction
+  state.
+
+  @example
+  {% content_for 'block', type: 'tab-layout', id: 'tab-layout' %}
+{% enddoc %}
+
+{% liquid
+  assign tab_layout_style = block.settings.style | default: 'underline'
+  unless tab_layout_style == 'underline' or tab_layout_style == 'button'
+    assign tab_layout_style = 'underline'
+  endunless
+
+  assign tab_layout_active_style = block.settings.active_style | default: 'primary'
+  unless tab_layout_active_style == 'primary' or tab_layout_active_style == 'outline'
+    assign tab_layout_active_style = 'primary'
+  endunless
+
+  assign tab_layout_vertical_layout = block.settings.vertical_layout
+
+  assign tab_layout_padding_top = block.settings.padding_top | default: 0 | plus: 0 | at_least: 0 | at_most: 100
+  assign tab_layout_padding_bottom = block.settings.padding_bottom | default: 0 | plus: 0 | at_least: 0 | at_most: 100
+  assign tab_layout_padding_top_mobile = block.settings.padding_top_mobile | default: 0 | plus: 0 | at_least: 0 | at_most: 100
+  assign tab_layout_padding_bottom_mobile = block.settings.padding_bottom_mobile | default: 0 | plus: 0 | at_least: 0 | at_most: 100
+
+  assign tab_layout_gap_desktop = block.settings.gap_desktop | default: 16 | plus: 0
+  if tab_layout_gap_desktop < 0 or tab_layout_gap_desktop > 100
+    assign tab_layout_gap_desktop = 16
+  endif
+  assign tab_layout_gap_mobile = block.settings.gap_mobile | default: 16 | plus: 0
+  if tab_layout_gap_mobile < 0 or tab_layout_gap_mobile > 100
+    assign tab_layout_gap_mobile = 16
+  endif
+
+  assign tab_layout_font = block.settings.font | default: 'body'
+  unless tab_layout_font == 'body' or tab_layout_font == 'heading' or tab_layout_font == 'accent'
+    assign tab_layout_font = 'body'
+  endunless
+
+  assign tab_layout_font_size = block.settings.heading_size
+  if tab_layout_font_size == blank
+    assign tab_layout_font_size = block.settings.font_size
+  endif
+  assign tab_layout_font_size = tab_layout_font_size | default: 'lg'
+  unless tab_layout_font_size == 'display' or tab_layout_font_size == 'xl' or tab_layout_font_size == 'lg' or tab_layout_font_size == 'md' or tab_layout_font_size == 'sm' or tab_layout_font_size == 'xs' or tab_layout_font_size == 'custom'
+    assign tab_layout_font_size = 'lg'
+  endunless
+
+  assign tab_layout_custom_size = block.settings.custom_heading_size | default: 24 | plus: 0
+  if tab_layout_custom_size < 10 or tab_layout_custom_size > 100
+    assign tab_layout_custom_size = 24
+  endif
+
+  if tab_layout_font == 'heading'
+    case block.settings.heading_tag
+      when 'h1'
+        assign tab_layout_font_size = 'display'
+      when 'h2'
+        assign tab_layout_font_size = 'xl'
+      when 'h3'
+        assign tab_layout_font_size = 'lg'
+      when 'h4'
+        assign tab_layout_font_size = 'md'
+      when 'h5'
+        assign tab_layout_font_size = 'sm'
+      when 'h6'
+        assign tab_layout_font_size = 'xs'
+    endcase
+  endif
+
+  assign tab_layout_font_family = 'var(--font-heading-family)'
+  assign tab_layout_font_style = 'var(--font-heading-style)'
+  assign tab_layout_font_weight = 'var(--font-heading-weight)'
+  case tab_layout_font
+    when 'body'
+      assign tab_layout_font_family = 'var(--font-body-family)'
+      assign tab_layout_font_style = 'var(--font-body-style)'
+      assign tab_layout_font_weight = 'var(--font-body-weight)'
+    when 'accent'
+      assign tab_layout_font_family = 'var(--font-accent-family)'
+      assign tab_layout_font_style = 'var(--font-accent-style)'
+      assign tab_layout_font_weight = 'var(--font-accent-weight)'
+  endcase
+
+  assign tab_layout_font_size_token = 'var(--font-heading-xs)'
+  assign tab_layout_line_height_token = 'var(--font-heading-xs-line-height)'
+  assign tab_layout_letter_spacing_token = 'var(--font-heading-xs-letter-spacing)'
+  assign tab_layout_text_transform_token = 'var(--font-heading-xs-text-transform)'
+  case tab_layout_font_size
+    when 'display'
+      assign tab_layout_font_size_token = 'var(--font-heading-display)'
+      assign tab_layout_line_height_token = 'var(--font-heading-display-line-height)'
+      assign tab_layout_letter_spacing_token = 'var(--font-heading-display-letter-spacing)'
+      assign tab_layout_text_transform_token = 'var(--font-heading-display-text-transform)'
+    when 'xl'
+      assign tab_layout_font_size_token = 'var(--font-heading-xl)'
+      assign tab_layout_line_height_token = 'var(--font-heading-xl-line-height)'
+      assign tab_layout_letter_spacing_token = 'var(--font-heading-xl-letter-spacing)'
+      assign tab_layout_text_transform_token = 'var(--font-heading-xl-text-transform)'
+    when 'lg'
+      assign tab_layout_font_size_token = 'var(--font-heading-lg)'
+      assign tab_layout_line_height_token = 'var(--font-heading-lg-line-height)'
+      assign tab_layout_letter_spacing_token = 'var(--font-heading-lg-letter-spacing)'
+      assign tab_layout_text_transform_token = 'var(--font-heading-lg-text-transform)'
+    when 'md'
+      assign tab_layout_font_size_token = 'var(--font-heading-md)'
+      assign tab_layout_line_height_token = 'var(--font-heading-md-line-height)'
+      assign tab_layout_letter_spacing_token = 'var(--font-heading-md-letter-spacing)'
+      assign tab_layout_text_transform_token = 'var(--font-heading-md-text-transform)'
+    when 'sm'
+      assign tab_layout_font_size_token = 'var(--font-heading-sm)'
+      assign tab_layout_line_height_token = 'var(--font-heading-sm-line-height)'
+      assign tab_layout_letter_spacing_token = 'var(--font-heading-sm-letter-spacing)'
+      assign tab_layout_text_transform_token = 'var(--font-heading-sm-text-transform)'
+    when 'xs'
+      assign tab_layout_font_size_token = 'var(--font-heading-xs)'
+      assign tab_layout_line_height_token = 'var(--font-heading-xs-line-height)'
+      assign tab_layout_letter_spacing_token = 'var(--font-heading-xs-letter-spacing)'
+      assign tab_layout_text_transform_token = 'var(--font-heading-xs-text-transform)'
+    when 'custom'
+      assign tab_layout_font_size_token = 'var(--font-heading-custom)'
+      assign tab_layout_line_height_token = 'var(--font-heading-custom-line-height)'
+      assign tab_layout_letter_spacing_token = 'var(--font-heading-custom-letter-spacing)'
+      assign tab_layout_text_transform_token = 'var(--font-heading-custom-text-transform)'
+  endcase
+
+  if tab_layout_font == 'body'
+    case tab_layout_font_size
+      when 'display'
+        assign tab_layout_font_size_token = 'var(--font-body-xxl)'
+        assign tab_layout_line_height_token = 'var(--font-body-line-height)'
+        assign tab_layout_letter_spacing_token = 'var(--font-body-letter-spacing)'
+        assign tab_layout_text_transform_token = 'var(--font-body-text-transform)'
+      when 'xl'
+        assign tab_layout_font_size_token = 'var(--font-body-xl)'
+        assign tab_layout_line_height_token = 'var(--font-body-line-height)'
+        assign tab_layout_letter_spacing_token = 'var(--font-body-letter-spacing)'
+        assign tab_layout_text_transform_token = 'var(--font-body-text-transform)'
+      when 'lg'
+        assign tab_layout_font_size_token = 'var(--font-body-lg)'
+        assign tab_layout_line_height_token = 'var(--font-body-line-height)'
+        assign tab_layout_letter_spacing_token = 'var(--font-body-letter-spacing)'
+        assign tab_layout_text_transform_token = 'var(--font-body-text-transform)'
+      when 'md'
+        assign tab_layout_font_size_token = 'var(--font-body-md)'
+        assign tab_layout_line_height_token = 'var(--font-body-line-height)'
+        assign tab_layout_letter_spacing_token = 'var(--font-body-letter-spacing)'
+        assign tab_layout_text_transform_token = 'var(--font-body-text-transform)'
+      when 'sm'
+        assign tab_layout_font_size_token = 'var(--font-body-sm)'
+        assign tab_layout_line_height_token = 'var(--font-body-line-height)'
+        assign tab_layout_letter_spacing_token = 'var(--font-body-letter-spacing)'
+        assign tab_layout_text_transform_token = 'var(--font-body-text-transform)'
+      when 'xs'
+        assign tab_layout_font_size_token = 'var(--font-body-xs)'
+        assign tab_layout_line_height_token = 'var(--font-body-line-height)'
+        assign tab_layout_letter_spacing_token = 'var(--font-body-letter-spacing)'
+        assign tab_layout_text_transform_token = 'var(--font-body-text-transform)'
+      when 'custom'
+        assign tab_layout_font_size_token = 'var(--font-body-md)'
+        assign tab_layout_line_height_token = 'var(--font-body-line-height)'
+        assign tab_layout_letter_spacing_token = 'var(--font-body-letter-spacing)'
+        assign tab_layout_text_transform_token = 'var(--font-body-text-transform)'
+    endcase
+  endif
+
+  if tab_layout_font_size == 'custom'
+    assign tab_layout_font_size_token = tab_layout_custom_size | append: 'px'
+  endif
+%}
+
+{% capture tab_layout_style_attribute %}
+  {% if tab_layout_padding_top != 0 %}--tab-layout-padding-top: {{ tab_layout_padding_top }}px;{% endif %}
+  {% if tab_layout_padding_bottom != 0 %}--tab-layout-padding-bottom: {{ tab_layout_padding_bottom }}px;{% endif %}
+  {% if block.settings.customize_mobile_padding %}
+    {% if tab_layout_padding_top_mobile != tab_layout_padding_top %}--tab-layout-padding-top-mobile: {{ tab_layout_padding_top_mobile }}px;{% endif %}
+    {% if tab_layout_padding_bottom_mobile != tab_layout_padding_bottom %}--tab-layout-padding-bottom-mobile: {{ tab_layout_padding_bottom_mobile }}px;{% endif %}
+  {% endif %}
+  --tab-layout-gap-desktop: {{ tab_layout_gap_desktop }}px;
+  --tab-layout-gap-mobile: {{ tab_layout_gap_mobile }}px;
+  --tab-layout-font-family: {{ tab_layout_font_family }};
+  --tab-layout-font-style: {{ tab_layout_font_style }};
+  --tab-layout-font-weight: {{ tab_layout_font_weight }};
+  --tab-layout-font-size: {{ tab_layout_font_size_token }};
+  --tab-layout-line-height: {{ tab_layout_line_height_token }};
+  --tab-layout-letter-spacing: {{ tab_layout_letter_spacing_token }};
+  --tab-layout-text-transform: {{ tab_layout_text_transform_token }};
+{% endcapture %}
+{% assign tab_layout_style_attribute = tab_layout_style_attribute | strip %}
+
+<div
+  class="tab-layout tab-layout--{{ tab_layout_style }} tab-layout--active-{{ tab_layout_active_style }}"
+  data-tab-layout
+  data-tab-layout-ready="false"
+  data-vertical-layout="{{ tab_layout_vertical_layout }}"
+  {% if tab_layout_style_attribute != blank %}style="{{ tab_layout_style_attribute }}"{% endif %}
+  {{ block.shopify_attributes }}
+>
+  <div
+    class="tab-layout__navigation scrollbar{% if tab_layout_vertical_layout %} scrollbar--vertical{% else %} scrollbar--horizontal{% endif %} scrollbar--hidden"
+    role="tablist"
+    aria-label="{{ 'accessibility.collection_tabs' | t | escape }}"
+    data-tab-navigation
+    hidden
+  ></div>
+</div>
+
+{% render 'tab-layout-styles' %}
+
+{% javascript %}
+(() => {
+  const instances = new WeakMap();
+  const EXTERNAL_NAVIGATION_EVENTS = ['afterInit', 'fromEdge', 'lock', 'resize', 'slideChange', 'toEdge', 'unlock', 'update'];
+
+  const synchronizeEntries = (state) => {
+    const existingEntries = new Map(state.entries.map((entry) => [entry.tab, entry]));
+    const entries = [];
+    const tabs = Array.from(state.scope.querySelectorAll('[data-collection-tab]'));
+    const currentTabs = new Set(tabs);
+
+    state.entries.forEach((entry) => {
+      if (!currentTabs.has(entry.tab)) entry.trigger.remove();
+    });
+
+    tabs.forEach((tab) => {
+      let entry = existingEntries.get(tab);
+      const nestedTrigger = tab.querySelector('[data-collection-tab-trigger]');
+      const nestedPanel = tab.querySelector('[data-collection-tab-panel]');
+
+      if (entry && nestedTrigger && nestedTrigger !== entry.trigger) {
+        entry.trigger.remove();
+        entry = { tab, trigger: nestedTrigger, panel: nestedPanel };
+      }
+
+      if (!entry) {
+        if (!nestedTrigger || !nestedPanel) return;
+        entry = { tab, trigger: nestedTrigger, panel: nestedPanel };
+      } else if (nestedPanel && nestedPanel !== entry.panel) {
+        entry.panel = nestedPanel;
+      }
+      if (!entry.trigger || !entry.panel) return;
+
+      const tabId = tab.dataset.tabId;
+      entry.trigger.dataset.tabId = tabId;
+      entry.panel.dataset.tabId = tabId;
+      entry.trigger.setAttribute('role', 'tab');
+      entry.trigger.setAttribute('aria-controls', entry.panel.id);
+      entry.panel.setAttribute('role', 'tabpanel');
+      entry.panel.setAttribute('aria-labelledby', entry.trigger.id);
+
+      if (!state.navigation.contains(entry.trigger)) {
+        state.navigation.append(entry.trigger);
+      }
+
+      entries.push(entry);
+    });
+
+    const validTriggers = new Set(entries.map((entry) => entry.trigger));
+    state.navigation.querySelectorAll('[data-collection-tab-trigger]').forEach((trigger) => {
+      if (!validTriggers.has(trigger)) trigger.remove();
+    });
+
+    const currentTriggers = Array.from(state.navigation.querySelectorAll('[data-collection-tab-trigger]'));
+    const entriesAreOrdered =
+      currentTriggers.length === entries.length &&
+      entries.every((entry, index) => currentTriggers[index] === entry.trigger);
+    if (!entriesAreOrdered) {
+      entries.forEach((entry) => state.navigation.append(entry.trigger));
+    }
+
+    state.entries = entries;
+    state.navigation.hidden = entries.length === 0;
+  };
+
+  const prefersReducedMotion = () =>
+    typeof window !== 'undefined' &&
+    typeof window.matchMedia === 'function' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const cancelPanelAnimation = (state) => {
+    if (state.panelAnimationFrame) {
+      window.cancelAnimationFrame(state.panelAnimationFrame);
+      state.panelAnimationFrame = 0;
+    }
+    state.panelAnimation?.cancel();
+    state.panelAnimation = null;
+  };
+
+  const animatePanel = (state, panel) => {
+    cancelPanelAnimation(state);
+
+    if (!panel || typeof panel.animate !== 'function' || prefersReducedMotion()) return;
+
+    // A newly selected panel may have just been removed from the hidden/display:none
+    // state. Wait for the browser to commit that layout before starting the
+    // animation, otherwise the first reveal can be skipped entirely.
+    state.panelAnimationFrame = window.requestAnimationFrame(() => {
+      state.panelAnimationFrame = 0;
+      if (instances.get(state.layout) !== state || state.activeEntry?.panel !== panel || panel.hidden) return;
+
+      const animation = panel.animate(
+        [
+          { transform: 'translateY(2rem)', opacity: 0 },
+          { transform: 'translateY(0)', opacity: 1 }
+        ],
+        {
+          duration: 150,
+          easing: 'ease',
+          fill: 'none'
+        }
+      );
+
+      state.panelAnimation = animation;
+      animation.finished
+        .then(() => {
+          if (state.panelAnimation === animation) state.panelAnimation = null;
+        })
+        .catch(() => {});
+    });
+  };
+
+  const updateViewAll = (state, trigger) => {
+    const viewAll = Array.from(state.scope.querySelectorAll('[data-collection-tabs-view-all]'));
+    state.viewAll = viewAll;
+    if (!viewAll.length) return;
+
+    const url = trigger?.dataset.collectionUrl?.trim() || '';
+    const available = Boolean(url) && trigger?.dataset.viewAllAvailable === 'true';
+    viewAll.forEach((button) => {
+      const wrapper = button.closest('[data-collection-tabs-view-all-wrapper]');
+      if (wrapper) wrapper.hidden = !available;
+    });
+    if (available) {
+      viewAll.forEach((button) => {
+        button.setAttribute('href', url);
+        button.removeAttribute('aria-disabled');
+        button.removeAttribute('tabindex');
+      });
+      return;
+    }
+
+    viewAll.forEach((button) => {
+      button.removeAttribute('href');
+      button.setAttribute('aria-disabled', 'true');
+      button.setAttribute('tabindex', '-1');
+    });
+  };
+
+  const getExternalNavigation = (state) => state.scope.querySelector('[data-collection-tabs-navigation]');
+
+  const getActiveCarousel = (state) =>
+    state.activeEntry?.tab.querySelector('[data-product-carousel][data-layout="carousel"]') || null;
+
+  const updateExternalNavigation = (state) => {
+    const navigation = getExternalNavigation(state);
+    if (!navigation) {
+      state.externalNavigationCleanup?.();
+      state.externalNavigationCleanup = null;
+      state.externalNavigationSwiper = null;
+      return;
+    }
+
+    const previous = navigation.querySelector('[data-collection-tabs-navigation-previous]');
+    const next = navigation.querySelector('[data-collection-tabs-navigation-next]');
+    const swiper = getActiveCarousel(state)?.swiper;
+    const activeSwiper = swiper && !swiper.destroyed ? swiper : null;
+
+    if (state.externalNavigationSwiper !== activeSwiper) {
+      state.externalNavigationCleanup?.();
+      state.externalNavigationCleanup = null;
+      state.externalNavigationSwiper = activeSwiper;
+
+      if (activeSwiper && typeof activeSwiper.on === 'function') {
+        const update = () => updateExternalNavigation(state);
+        EXTERNAL_NAVIGATION_EVENTS.forEach((eventName) => activeSwiper.on(eventName, update));
+        state.externalNavigationCleanup = () => {
+          EXTERNAL_NAVIGATION_EVENTS.forEach((eventName) => activeSwiper.off(eventName, update));
+        };
+      }
+    }
+
+    const isLocked = !activeSwiper || Boolean(activeSwiper.isLocked);
+    const isLooping = Boolean(activeSwiper?.params?.loop);
+    [
+      [previous, isLocked || (!isLooping && Boolean(activeSwiper?.isBeginning))],
+      [next, isLocked || (!isLooping && Boolean(activeSwiper?.isEnd))]
+    ].forEach(([control, disabled]) => {
+      if (!control) return;
+      control.disabled = disabled;
+      control.setAttribute('aria-disabled', String(disabled));
+      if (activeSwiper?.el?.id) {
+        control.setAttribute('aria-controls', activeSwiper.el.id);
+      } else {
+        control.removeAttribute('aria-controls');
+      }
+    });
+  };
+
+  const clearPendingTab = (state) => {
+    state.requestedTabId = null;
+    state.entries.forEach(({panel}) => {
+      if (panel.dataset.tabLoading !== 'true') return;
+      delete panel.dataset.tabLoading;
+      panel.removeAttribute('aria-busy');
+      panel.inert = false;
+    });
+  };
+
+  // Cache the response near the viewport without populating unselected panels.
+  const requestTabSection = (state) => {
+    if (state.tabSectionRequest) return state.tabSectionRequest;
+    const pending = state.entries.find(entry => entry.panel.hasAttribute('data-tab-deferred'));
+    if (!pending) return Promise.resolve(null);
+    const url = new URL(window.location.href);
+    url.searchParams.delete('sections');
+    url.searchParams.set('section_id', pending.panel.dataset.sectionId);
+    const request = fetch(url, {signal: state.controller.signal, credentials: 'same-origin'})
+      .then(response => {
+        if (!response.ok) throw new Error('Collection tabs request failed');
+        return response.text();
+      })
+      .catch(error => {
+        if (state.tabSectionRequest === request) state.tabSectionRequest = null;
+        throw error;
+      });
+    state.tabSectionRequest = request;
+    return request;
+  };
+
+  // Keep live panel/trigger nodes so keyboard focus and observers remain stable.
+  const loadDeferredPanels = (state) => {
+    const pending = state.entries.filter(entry => entry.panel.hasAttribute('data-tab-deferred'));
+    if (!pending.length) return Promise.resolve();
+    if (state.loadingPanels) return state.loadingPanels;
+    const attempt = requestTabSection(state)
+      .then(html => {
+        if (instances.get(state.layout) !== state) return;
+        const fragment = new DOMParser().parseFromString(html, 'text/html');
+        const replacements = pending.map(entry => ({entry, source: fragment.getElementById(entry.panel.id)}));
+        if (replacements.some(({source}) => !source || source.hasAttribute('data-tab-deferred'))) {
+          state.tabSectionRequest = null;
+          throw new Error('Collection tabs response is incomplete');
+        }
+        replacements.forEach(({entry, source}) => {
+          entry.panel.replaceChildren(...source.childNodes);
+          entry.panel.removeAttribute('data-tab-deferred');
+          entry.panel.removeAttribute('aria-busy');
+        });
+        // Reuse the theme module loader, including already imported carousels.
+        const panel = state.activeEntry.panel;
+        fragment.querySelectorAll('script[data-theme-module]').forEach(marker => panel.append(marker.cloneNode(true)));
+        const requestedId = state.requestedTabId;
+        clearPendingTab(state);
+        if (requestedId) setActiveTab(state, requestedId, false, true);
+        updateExternalNavigation(state);
+      })
+      .catch(error => {
+        if (error.name === 'AbortError' || instances.get(state.layout) !== state) return;
+        clearPendingTab(state);
+        setActiveTab(state, state.activeEntry?.trigger.dataset.tabId, false, false);
+        const status = state.scope.querySelector('[data-tab-load-status]');
+        if (status) status.textContent = state.scope.dataset.tabLoadError;
+      })
+      .finally(() => { if (state.loadingPanels === attempt) state.loadingPanels = null; });
+    state.loadingPanels = attempt;
+    return attempt;
+  };
+
+  const setActiveTab = (state, selectedId, shouldFocus, shouldAnimate) => {
+    synchronizeEntries(state);
+    const selectedEntry = state.entries.find(entry => entry.trigger.dataset.tabId === selectedId) || state.entries[0];
+    if (!selectedEntry) return;
+    const previousEntry = state.entries.includes(state.activeEntry) ? state.activeEntry : null;
+    const targetId = selectedEntry.trigger.dataset.tabId;
+    // The selected button responds immediately while the outgoing panel finishes.
+    state.entries.forEach(entry => {
+      const selected = entry === selectedEntry;
+      entry.trigger.setAttribute('aria-selected', String(selected));
+      entry.trigger.tabIndex = selected ? 0 : -1;
+    });
+    if (state.transitionTarget === targetId) return;
+    if (state.transitionTarget) {
+      cancelPanelAnimation(state);
+      state.transitionTarget = null;
+      state.transitionRevision = (state.transitionRevision || 0) + 1;
+      if (previousEntry) {
+        delete previousEntry.panel.dataset.tabExiting;
+        previousEntry.panel.inert = false;
+      }
+    }
+    if (selectedEntry.panel.hasAttribute('data-tab-deferred')) {
+      state.requestedTabId = targetId;
+      if (previousEntry) {
+        previousEntry.panel.dataset.tabLoading = 'true';
+        previousEntry.panel.setAttribute('aria-busy', 'true');
+        previousEntry.panel.inert = true;
+      }
+      if (shouldFocus) selectedEntry.trigger.focus();
+      loadDeferredPanels(state);
+      return;
+    }
+    clearPendingTab(state);
+    const activate = () => {
+      if (instances.get(state.layout) !== state) return;
+      state.transitionTarget = null;
+      if (shouldAnimate && previousEntry !== selectedEntry) selectedEntry.panel.dataset.tabReveal = 'switch';
+      state.entries.forEach(entry => {
+        const isActive = entry === selectedEntry;
+        entry.trigger.setAttribute('aria-selected', String(isActive));
+        entry.trigger.tabIndex = isActive ? 0 : -1;
+        entry.panel.hidden = !isActive;
+        entry.panel.setAttribute('aria-hidden', String(!isActive));
+        entry.panel.inert = false;
+        delete entry.panel.dataset.tabExiting;
+        entry.tab.dataset.tabActive = String(isActive);
+      });
+      state.activeEntry = selectedEntry;
+      state.layout.dataset.tabLayoutActive = targetId;
+      updateViewAll(state, selectedEntry.trigger);
+      updateExternalNavigation(state);
+      if (shouldFocus) selectedEntry.trigger.focus();
+      if (shouldAnimate && previousEntry && previousEntry !== selectedEntry) animatePanel(state, selectedEntry.panel);
+      else if (previousEntry !== selectedEntry) cancelPanelAnimation(state);
+    };
+    if (shouldAnimate && previousEntry && previousEntry !== selectedEntry &&
+        typeof previousEntry.panel.animate === 'function' && !prefersReducedMotion()) {
+      cancelPanelAnimation(state);
+      const revision = (state.transitionRevision || 0) + 1;
+      state.transitionRevision = revision;
+      state.transitionTarget = targetId;
+      previousEntry.panel.dataset.tabExiting = 'true';
+      previousEntry.panel.inert = true;
+      const animation = previousEntry.panel.animate([
+        {transform: 'translateY(0)', opacity: 1},
+        {transform: 'translateY(2rem)', opacity: 0}
+      ], {duration: 150, easing: 'ease', fill: 'forwards'});
+      state.panelAnimation = animation;
+      animation.finished.then(() => {
+        if (instances.get(state.layout) === state && state.transitionRevision === revision) activate();
+      }).catch(() => {});
+    } else activate();
+  };
+
+  const scheduleSynchronization = (state) => {
+    if (state.synchronizationQueued) return;
+    state.synchronizationQueued = true;
+    queueMicrotask(() => {
+      state.synchronizationQueued = false;
+      if (instances.get(state.layout) !== state) return;
+      setActiveTab(state, state.transitionTarget || state.requestedTabId || state.layout.dataset.tabLayoutActive, false, false);
+    });
+  };
+
+  const initialize = (layout) => {
+    if (!layout || instances.has(layout)) return;
+    const navigation = layout.querySelector('[data-tab-navigation]');
+    if (!navigation) return;
+    const scope = layout.closest('[data-collection-tabs]') || layout;
+
+    const controller = new AbortController();
+    const state = {
+      layout,
+      scope,
+      navigation,
+      entries: [],
+      activeEntry: null,
+      viewAll: Array.from(scope.querySelectorAll('[data-collection-tabs-view-all]')),
+      controller,
+      observer: null,
+      panelAnimation: null,
+      panelAnimationFrame: 0,
+      synchronizationQueued: false,
+      externalNavigationSwiper: null,
+      externalNavigationCleanup: null
+    };
+
+    synchronizeEntries(state);
+    instances.set(layout, state);
+    layout.dataset.tabLayoutReady = 'true';
+    setActiveTab(state, layout.dataset.tabLayoutActive || state.entries[0]?.trigger.dataset.tabId, false, false);
+    scope.dataset.collectionTabsReady = 'true';
+
+    if (state.entries.some(entry => entry.panel.hasAttribute('data-tab-deferred'))) {
+      const warmResponse = () => { requestTabSection(state).catch(() => {}); };
+      if (typeof IntersectionObserver !== 'undefined') {
+        state.prefetchObserver = new IntersectionObserver(entries => {
+          if (!entries.some(entry => entry.isIntersecting)) return;
+          state.prefetchObserver.disconnect();
+          warmResponse();
+        }, {rootMargin: '600px 0px'});
+        state.prefetchObserver.observe(scope);
+      }
+      navigation.addEventListener('pointerenter', warmResponse, {signal: controller.signal});
+      navigation.addEventListener('focusin', warmResponse, {signal: controller.signal});
+    }
+
+    if (typeof MutationObserver !== 'undefined') {
+      state.observer = new MutationObserver(() => scheduleSynchronization(state));
+      state.observer.observe(scope, {
+        attributes: true,
+        attributeFilter: ['data-swiper-ready'],
+        childList: true,
+        subtree: true
+      });
+    }
+
+    scope.addEventListener('click', (event) => {
+      const target = event.target instanceof Element ? event.target.closest('[data-collection-tab-trigger]') : null;
+      if (target && scope.contains(target)) {
+        setActiveTab(state, target.dataset.tabId, false, true);
+        return;
+      }
+    }, { signal: controller.signal });
+
+    scope.addEventListener('click', (event) => {
+      const target = event.target instanceof Element
+        ? event.target.closest('[data-collection-tabs-navigation-previous], [data-collection-tabs-navigation-next]')
+        : null;
+      if (!target || !scope.contains(target)) return;
+
+      const swiper = state.externalNavigationSwiper || getActiveCarousel(state)?.swiper;
+      if (!swiper || swiper.destroyed || target.disabled || target.getAttribute('aria-disabled') === 'true') return;
+
+      event.preventDefault();
+      if (target.matches('[data-collection-tabs-navigation-previous]')) {
+        swiper.slidePrev();
+      } else {
+        swiper.slideNext();
+      }
+    }, { signal: controller.signal });
+
+    scope.addEventListener('keydown', (event) => {
+      const target = event.target instanceof Element ? event.target.closest('[data-collection-tab-trigger]') : null;
+      if (!target || !scope.contains(target)) return;
+
+      const supportedKeys = ['ArrowLeft', 'ArrowRight', 'Home', 'End'];
+      if (!supportedKeys.includes(event.key)) return;
+
+      synchronizeEntries(state);
+      const currentIndex = state.entries.findIndex((entry) => entry.trigger === target);
+      if (currentIndex < 0) return;
+
+      let nextIndex = currentIndex;
+      if (event.key === 'ArrowRight') nextIndex = (currentIndex + 1) % state.entries.length;
+      if (event.key === 'ArrowLeft') nextIndex = (currentIndex - 1 + state.entries.length) % state.entries.length;
+      if (event.key === 'Home') nextIndex = 0;
+      if (event.key === 'End') nextIndex = state.entries.length - 1;
+
+      event.preventDefault();
+      setActiveTab(state, state.entries[nextIndex].trigger.dataset.tabId, true, true);
+    }, { signal: controller.signal });
+  };
+
+  const initializeRoot = (root = document) => {
+    if (root.matches?.('[data-tab-layout]')) initialize(root);
+    root.querySelectorAll?.('[data-tab-layout]').forEach(initialize);
+  };
+
+  const destroyRoot = (root) => {
+    const layouts = [];
+    if (root.matches?.('[data-tab-layout]')) layouts.push(root);
+    root.querySelectorAll?.('[data-tab-layout]').forEach((layout) => layouts.push(layout));
+
+    layouts.forEach((layout) => {
+      const state = instances.get(layout);
+      if (!state) return;
+
+      state.externalNavigationCleanup?.();
+      state.externalNavigationCleanup = null;
+      state.externalNavigationSwiper = null;
+      clearPendingTab(state);
+      state.controller.abort();
+      state.observer?.disconnect();
+      state.prefetchObserver?.disconnect();
+      cancelPanelAnimation(state);
+      state.entries.forEach((entry) => {
+        if (entry.tab.isConnected && !entry.tab.contains(entry.trigger)) {
+          entry.tab.insertBefore(entry.trigger, entry.tab.firstChild);
+        }
+        entry.trigger.setAttribute('aria-selected', 'false');
+        entry.trigger.tabIndex = -1;
+        entry.panel.hidden = false;
+        entry.panel.inert = false;
+        delete entry.panel.dataset.tabExiting;
+        entry.panel.removeAttribute('aria-hidden');
+        delete entry.tab.dataset.tabActive;
+      });
+      updateViewAll(state, null);
+      state.navigation.hidden = true;
+      delete state.scope.dataset.collectionTabsReady;
+      layout.dataset.tabLayoutReady = 'false';
+      delete layout.dataset.tabLayoutActive;
+      instances.delete(layout);
+    });
+  };
+
+  document.addEventListener('shopify:section:load', (event) => initializeRoot(event.target));
+  document.addEventListener('shopify:section:select', (event) => initializeRoot(event.target));
+  document.addEventListener('shopify:section:unload', (event) => destroyRoot(event.target));
+  document.addEventListener('shopify:block:select', (event) => {
+    const target = event.target instanceof Element ? event.target : null;
+    const layout = target?.closest('[data-tab-layout]') || target?.closest('[data-collection-tabs]')?.querySelector('[data-tab-layout]');
+    if (!layout) return;
+
+    initialize(layout);
+    const state = instances.get(layout);
+    if (!state) return;
+
+    const selectedTrigger = target.closest('[data-collection-tab-trigger]');
+    const selectedTab = target.closest('[data-collection-tab]');
+    const selectedId = selectedTrigger?.dataset.tabId || selectedTab?.dataset.tabId;
+    if (selectedId) setActiveTab(state, selectedId, false, true);
+  });
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => initializeRoot(), { once: true });
+  } else {
+    initializeRoot();
+  }
+})();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:general.tab_layout",
+  "tag": null,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "vertical_layout",
+      "label": "t:labels.vertical_layout",
+      "default": false,
+      "visible_if": "{{ section.settings.layout_direction == 'horizontal' }}"
+    },
+    {
+      "type": "select",
+      "id": "style",
+      "label": "t:general.style",
+      "options": [
+        { "value": "underline", "label": "t:options.tab_style.underline" },
+        { "value": "button", "label": "t:options.tab_style.button" }
+      ],
+      "default": "underline"
+    },
+    {
+      "type": "select",
+      "id": "active_style",
+      "label": "t:labels.active_style",
+      "options": [
+        { "value": "primary", "label": "t:options.tab_active_style.primary" },
+        { "value": "outline", "label": "t:options.tab_active_style.outline" }
+      ],
+      "default": "primary",
+      "visible_if": "{{ block.settings.style == 'button' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:general.gap"
+    },
+    {
+      "type": "range",
+      "id": "gap_desktop",
+      "label": "t:options.device.desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "gap_mobile",
+      "label": "t:options.device.mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "t:general.typography"
+    },
+    {
+      "type": "select",
+      "id": "font",
+      "label": "t:labels.font",
+      "options": [
+        { "value": "body", "label": "t:options.menu_font.body" },
+        { "value": "heading", "label": "t:options.menu_font.heading" },
+        { "value": "accent", "label": "t:options.menu_font.accent" }
+      ],
+      "default": "body"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Heading style",
+      "options": [
+        { "value": "existing", "label": "Use size setting" },
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "h4", "label": "H4" },
+        { "value": "h5", "label": "H5" },
+        { "value": "h6", "label": "H6" }
+      ],
+      "default": "existing",
+      "visible_if": "{{ block.settings.font == 'heading' }}"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "t:labels.heading_size",
+      "options": [
+        { "value": "display", "label": "t:options.heading_size.display" },
+        { "value": "xl", "label": "t:options.heading_size.xl" },
+        { "value": "lg", "label": "t:options.heading_size.lg" },
+        { "value": "md", "label": "t:options.heading_size.md" },
+        { "value": "sm", "label": "t:options.heading_size.sm" },
+        { "value": "xs", "label": "t:options.heading_size.xs" },
+        { "value": "custom", "label": "t:options.heading_size.custom" }
+      ],
+      "default": "lg",
+      "visible_if": "{{ block.settings.font != 'heading' or block.settings.heading_tag == 'existing' }}"
+    },
+    {
+      "type": "range",
+      "id": "custom_heading_size",
+      "label": "Custom size",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 24,
+      "visible_if": "{{ block.settings.heading_size == 'custom' and block.settings.font != 'heading' or block.settings.heading_size == 'custom' and block.settings.heading_tag == 'existing' }}"
+    },
+    {"type":"header","content":"t:general.padding"},
+    {"type":"range","id":"padding_top","label":"t:labels.top_padding","min":0,"max":100,"step":1,"unit":"px","default":0},
+    {"type":"range","id":"padding_bottom","label":"t:labels.bottom_padding","min":0,"max":100,"step":1,"unit":"px","default":0},
+    {"type":"checkbox","id":"customize_mobile_padding","label":"t:labels.customize_mobile_padding","default":false},
+    {"type":"range","id":"padding_top_mobile","label":"t:labels.mobile_top_padding","min":0,"max":100,"step":1,"unit":"px","default":0,"visible_if":"{{ block.settings.customize_mobile_padding }}"},
+    {"type":"range","id":"padding_bottom_mobile","label":"t:labels.mobile_bottom_padding","min":0,"max":100,"step":1,"unit":"px","default":0,"visible_if":"{{ block.settings.customize_mobile_padding }}"}
+  ],
+  "presets": [
+    {
+      "name": "t:general.tab_layout",
+      "category": "t:general.collection",
+      "settings": {
+        "vertical_layout": false,
+        "style": "underline",
+        "active_style": "primary",
+        "gap_desktop": 16,
+        "gap_mobile": 16,
+        "font": "body",
+        "heading_size": "lg"
+      }
+    }
+  ]
+}
+{% endschema %}

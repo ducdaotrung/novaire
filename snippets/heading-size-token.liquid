@@ -1,0 +1,15 @@
+{% doc %}
+  Normalize legacy visual heading values without changing semantic HTML tags.
+  @param {string} size - Visual size token or saved legacy heading value
+  @param {string} fallback - Default visual size token
+{% enddoc %}
+{%- case size -%}
+  {%- when 'h1', 'heading_1' -%}display
+  {%- when 'h2', 'heading_2' -%}xl
+  {%- when 'h3', 'heading_3' -%}lg
+  {%- when 'h4', 'heading_4' -%}md
+  {%- when 'h5', 'heading_5' -%}sm
+  {%- when 'h6', 'heading_6' -%}xs
+  {%- when 'display', 'xl', 'lg', 'md', 'sm', 'xs', 'custom' -%}{{- size -}}
+  {%- else -%}{{- fallback -}}
+{%- endcase -%}

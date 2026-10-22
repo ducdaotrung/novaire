@@ -1,0 +1,97 @@
+{% doc %}
+  Renders a self-contained SVG as an isolated image, never as inline DOM.
+
+  The allow-list rejects active/foreign elements, event attributes, XML
+  declarations/entities, and external references. It is an input policy, not
+  a general XML sanitizer: the image decoder is the XML parsing boundary.
+  Malformed XML cannot become HTML. Image mode disables scripts and external
+  resources, and prevents theme CSS from changing SVG colors or stroke widths.
+
+  @param {string} markup - A single, self-contained SVG root
+{% enddoc %}
+{%- liquid
+  assign svg_markup = markup | default: '' | strip
+  assign svg_valid = true
+  assign svg_lower = svg_markup | downcase
+  assign svg_start = svg_lower | slice: 0, 4
+  assign svg_end = svg_lower | slice: -6, 6
+  if svg_markup == blank or svg_markup.size > 65536 or svg_start != '<svg' or svg_end != '</svg>'
+    assign svg_valid = false
+  endif
+
+  assign svg_backslash = '%5C' | url_decode
+  assign svg_tab = '%09' | url_decode
+  assign svg_lf = '%0A' | url_decode
+  assign svg_cr = '%0D' | url_decode
+  assign svg_normalized = svg_lower | replace: svg_lf, ' ' | replace: svg_cr, ' ' | replace: svg_tab, ' '
+  if svg_normalized contains '<!' or svg_normalized contains '<?' or svg_normalized contains '&' or svg_normalized contains svg_backslash or svg_normalized contains '{{' or svg_normalized contains '{%' or svg_normalized contains '@import' or svg_normalized contains '@font-face'
+    assign svg_valid = false
+  endif
+
+  assign svg_elements = 'svg|g|path|rect|circle|ellipse|line|polyline|polygon|defs|symbol|use|title|desc|text|tspan|textpath|style|lineargradient|radialgradient|stop|clippath|mask|pattern|marker|filter|feblend|fecolormatrix|fecomponenttransfer|fecomposite|feconvolvematrix|fediffuselighting|fedisplacementmap|fedistantlight|fedropshadow|feflood|fefunca|fefuncb|fefuncg|fefuncr|fegaussianblur|femerge|femergenode|femorphology|feoffset|fepointlight|fespecularlighting|fespotlight|fetile|feturbulence' | split: '|'
+  assign svg_parts = svg_normalized | split: '<'
+  if svg_parts.size > 50
+    assign svg_valid = false
+  endif
+  assign svg_roots = 0
+  for svg_part in svg_parts
+    if svg_part == blank
+      continue
+    endif
+    unless svg_part contains '>'
+      assign svg_valid = false
+      break
+    endunless
+    assign svg_tag = svg_part | split: '>' | first | strip | remove: '/' | split: ' ' | first
+    unless svg_elements contains svg_tag
+      assign svg_valid = false
+      break
+    endunless
+    if svg_tag == 'svg'
+      assign svg_roots = svg_roots | plus: 1
+    endif
+
+    assign svg_attributes = svg_part | split: '>' | first | split: '='
+    if svg_attributes.size > 50
+      assign svg_valid = false
+      break
+    endif
+    for svg_attribute in svg_attributes
+      if forloop.last
+        break
+      endif
+      assign svg_attribute_name = svg_attribute | strip | split: ' ' | last
+      assign svg_attribute_start = svg_attribute_name | slice: 0, 2
+      if svg_attribute_start == 'on' or svg_attribute_name contains ':on' or svg_attribute_name == 'xml:base'
+        assign svg_valid = false
+        break
+      endif
+      if svg_attribute_name == 'href' or svg_attribute_name == 'xlink:href'
+        assign svg_reference = svg_attributes[forloop.index] | strip | remove: '"' | remove: "'" | slice: 0, 1
+        unless svg_reference == '#'
+          assign svg_valid = false
+          break
+        endunless
+      endif
+    endfor
+  endfor
+  unless svg_roots == 2
+    assign svg_valid = false
+  endunless
+
+  assign svg_urls = svg_normalized | remove: ' ' | remove: '"' | remove: "'" | split: 'url('
+  for svg_url in svg_urls offset: 1
+    assign svg_reference = svg_url | slice: 0, 1
+    unless svg_reference == '#'
+      assign svg_valid = false
+      break
+    endunless
+  endfor
+
+  unless svg_lower contains 'xmlns='
+    assign svg_markup = svg_markup | replace_first: '<svg', '<svg xmlns="http://www.w3.org/2000/svg"'
+  endunless
+-%}
+{%- if svg_valid -%}
+  <img class="icon-renderer__custom-image" src="data:image/svg+xml,{{ svg_markup | url_encode | replace: '+', '%20' }}" alt="" width="24" height="24" decoding="async">
+{%- endif -%}

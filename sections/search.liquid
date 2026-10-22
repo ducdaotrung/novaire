@@ -1,0 +1,125 @@
+{{ 'section-collection.css' | asset_url | stylesheet_tag }}
+{{ 'component-search-suggestions.css' | asset_url | stylesheet_tag }}
+{% style %}#shopify-section-{{ section.id }}{background:{{ section.settings.background_color | default: section.settings.color_scheme.settings.background }}}{% endstyle %}
+<div class="search-page__spacing main-collection main-collection--blocks section-spacing color-scheme section-color-scope {{ section.settings.color_scheme }}" data-search-page style="--section-padding-top:{{ section.settings.padding_top }}px;--section-padding-bottom:{{ section.settings.padding_bottom }}px;{% if section.settings.customize_mobile_padding %}--section-padding-top-mobile:{{ section.settings.padding_top_mobile }}px;--section-padding-bottom-mobile:{{ section.settings.padding_bottom_mobile }}px{% endif %}">
+  <div class="container {% if section.settings.section_width == 'full' %}full-width{% else %}page-width{% endif %}">
+    {% content_for 'block', type: '_search-input', id: 'search' %}
+    {% content_for 'block', type: '_search-results', id: 'results' %}
+  </div>
+</div>
+<script src="{{ 'search-page.js' | asset_url }}" defer></script>
+<script src="{{ 'section-collection.js' | asset_url }}" defer></script>
+{% stylesheet %}
+.main-collection.search-page__spacing { background: inherit; }
+.search-page__summary { margin-block: 0 24px; }
+.search-page__tabs { display: none; gap: 24px; margin-block: 0 24px; border-bottom: 1px solid var(--border-color); }
+.search-page--enhanced .search-page__tabs { display: flex; }
+.search-page__tab { padding: 12px 0; border: 0; border-bottom: 2px solid transparent; background: transparent; color: inherit; cursor: pointer; }
+.search-page__tab[aria-selected='true'] { border-bottom-color: currentColor; }
+.search-page__empty { margin-block: 24px; }
+.search-page__page-list { padding: 0; list-style: none; }
+.search-page__page-list a { display: block; padding-block: 16px; color: inherit; border-bottom: 1px solid var(--border-color); }
+{% endstylesheet %}
+{% schema %}
+{
+  "name": "t:general.search_results",
+  "class": "section-search",
+  "enabled_on": {
+    "templates": [
+      "search"
+    ]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:general.layout"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "t:labels.section_width",
+      "options": [
+        {
+          "value": "page",
+          "label": "t:options.section_width.page_width"
+        },
+        {
+          "value": "full",
+          "label": "t:options.section_width.full_width"
+        }
+      ],
+      "default": "page"
+    },
+    {
+      "type": "header",
+      "content": "t:general.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:labels.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:labels.background_color",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "t:general.section_padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:labels.top_padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:labels.bottom_padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "checkbox",
+      "id": "customize_mobile_padding",
+      "label": "t:labels.customize_mobile_padding",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "t:labels.mobile_top_padding",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "default": 30,
+      "unit": "px",
+      "visible_if": "{{ section.settings.customize_mobile_padding }}"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "t:labels.mobile_bottom_padding",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "default": 50,
+      "unit": "px",
+      "visible_if": "{{ section.settings.customize_mobile_padding }}"
+    }
+  ],
+  "tag": "div",
+  "limit": 1
+}
+{% endschema %}

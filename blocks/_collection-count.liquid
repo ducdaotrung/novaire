@@ -1,0 +1,24 @@
+{% doc %}
+  @param {object} [search_resource] - Native search count; falls back to collection
+  Live collection result count.
+{% enddoc %}
+{% assign count_value = search_resource.results_count | default: collection.products_count %}
+<span class="main-collection__product-count" data-alignment="{{ block.settings.alignment }}" aria-live="polite" {{ block.shopify_attributes }}>{{ 'collection.item_count' | t: count: count_value }}</span>
+{% schema %}
+{
+  "name": "Product count",
+  "tag": null,
+  "settings": [
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    }
+  ]
+}
+{% endschema %}

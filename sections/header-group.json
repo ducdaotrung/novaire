@@ -1,0 +1,270 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "header",
+  "name": "t:general.header",
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "blocks": {
+        "announcement-text": {
+          "type": "announcement-text",
+          "settings": {
+            "text": "⌛ Free worldwide shipping & save up to 50%",
+            "text_color": "#3A3A3A",
+            "width": "fill",
+            "max_width": 640
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "announcement-text"
+      ],
+      "settings": {
+        "bottom_separator": false,
+        "type": "slider",
+        "speed": 1,
+        "direction": "left",
+        "autoplay": 5,
+        "pause_on_hover": true,
+        "navigation_behavior": "show_on_hover",
+        "navigation_icon": "arrow",
+        "font_size": "sm",
+        "background_type": "none",
+        "overlay": false,
+        "overlay_style": "solid",
+        "overlay_color": "#00000033",
+        "overlay_gradient": "linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.52))",
+        "gap": 16,
+        "color_scheme": "scheme-2",
+        "padding_top": 8,
+        "padding_right": 0,
+        "padding_bottom": 8,
+        "padding_left": 0
+      }
+    },
+    "header_i46geD": {
+      "type": "header",
+      "blocks": {
+        "header-top": {
+          "type": "_header-top",
+          "static": true,
+          "settings": {
+            "bottom_separator": "line",
+            "gap": 16,
+            "padding_top": 12,
+            "padding_bottom": 12,
+            "customize_mobile_padding": true,
+            "padding_top_mobile": 12,
+            "padding_bottom_mobile": 12
+          },
+          "blocks": {
+            "header_menu_YBCtFf": {
+              "type": "_header-menu",
+              "settings": {
+                "menu": "main-menu",
+                "gap": 32,
+                "show_dropdown_icon": false,
+                "dropdown_trigger": "hover",
+                "font": "heading",
+                "font_size": "md",
+                "letter_spacing": "normal",
+                "text_case": "uppercase",
+                "text_color": "#3a3a3a",
+                "submenu_font": "body",
+                "submenu_font_size": "md",
+                "submenu_text_case": "uppercase",
+                "submenu_text_color": "#3a3a3a"
+              },
+              "blocks": {
+                "mega_menu_banners_c8VJca": {
+                  "type": "_mega-menu-banners",
+                  "settings": {
+                    "menu_item": "Collections",
+                    "highlight_menu_item": false,
+                    "highlight_color": "#000000",
+                    "banner_width": 40,
+                    "gap": 12,
+                    "layout": "horizontal",
+                    "submenu_columns": "4",
+                    "limit_width": true,
+                    "max_width": 850,
+                    "collections": [],
+                    "font": "accent",
+                    "font_size": "xl",
+                    "letter_spacing": "normal"
+                  },
+                  "blocks": {
+                    "mega_menu_banner_ndtkfQ": {
+                      "type": "_mega-menu-banner",
+                      "settings": {
+                        "link": "",
+                        "open_new_tab": false,
+                        "layout": "content_on_image",
+                        "limit_width": false,
+                        "max_width": 700,
+                        "overlay": false,
+                        "overlay_style": "solid",
+                        "overlay_color": "#00000073",
+                        "overlay_gradient": "linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.52))",
+                        "subheading": "",
+                        "heading": "Curate Your Set",
+                        "text": "<p>Choose your favorites and save up to 20%.</p>",
+                        "alignment": "left",
+                        "content_position": "bottom",
+                        "heading_size": "lg",
+                        "custom_heading_size": 24,
+                        "text_size": "md",
+                        "label": "",
+                        "button_style": "primary",
+                        "show_icon": false,
+                        "icon": "arrow_right",
+                        "icon_position": "right",
+                        "full_width": false,
+                        "content_gap": 10,
+                        "button_spacing": 30,
+                        "color_scheme": "",
+                        "padding_top": 40,
+                        "padding_bottom": 40,
+                        "padding_left": 40,
+                        "padding_right": 40,
+                        "customize_mobile_padding": false,
+                        "padding_top_mobile": 40,
+                        "padding_bottom_mobile": 40,
+                        "padding_left_mobile": 40,
+                        "padding_right_mobile": 40
+                      },
+                      "blocks": {}
+                    },
+                    "mega_menu_banner_GBk7dp": {
+                      "type": "_mega-menu-banner",
+                      "settings": {
+                        "link": "",
+                        "open_new_tab": false,
+                        "layout": "content_on_image",
+                        "limit_width": false,
+                        "max_width": 700,
+                        "overlay": false,
+                        "overlay_style": "solid",
+                        "overlay_color": "#00000073",
+                        "overlay_gradient": "linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.52))",
+                        "subheading": "",
+                        "heading": "Curate Your Set",
+                        "text": "<p>Choose your favorites and save up to 20%.</p>",
+                        "alignment": "left",
+                        "content_position": "bottom",
+                        "heading_size": "lg",
+                        "custom_heading_size": 24,
+                        "text_size": "md",
+                        "label": "",
+                        "button_style": "primary",
+                        "show_icon": false,
+                        "icon": "arrow_right",
+                        "icon_position": "right",
+                        "full_width": false,
+                        "content_gap": 10,
+                        "button_spacing": 30,
+                        "color_scheme": "",
+                        "padding_top": 40,
+                        "padding_bottom": 40,
+                        "padding_left": 40,
+                        "padding_right": 40,
+                        "customize_mobile_padding": false,
+                        "padding_top_mobile": 40,
+                        "padding_bottom_mobile": 40,
+                        "padding_left_mobile": 40,
+                        "padding_right_mobile": 40
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "mega_menu_banner_ndtkfQ",
+                    "mega_menu_banner_GBk7dp"
+                  ]
+                }
+              },
+              "block_order": [
+                "mega_menu_banners_c8VJca"
+              ]
+            },
+            "header_logo_yY7enM": {
+              "type": "_header-logo",
+              "settings": {
+                "position": "center"
+              },
+              "blocks": {}
+            },
+            "header_menu_toggle_XAVCAG": {
+              "type": "_header-menu-toggle",
+              "settings": {
+                "position": "left"
+              },
+              "blocks": {}
+            },
+            "header_search_znqfRn": {
+              "type": "_header-search",
+              "settings": {
+                "type": "icon",
+                "label": "Search",
+                "font": "accent",
+                "font_size": "md",
+                "letter_spacing": "relaxed"
+              },
+              "blocks": {}
+            },
+            "header_account_qTEnbJ": {
+              "type": "_header-account",
+              "settings": {
+                "type": "icon",
+                "label": "Account",
+                "font": "accent",
+                "font_size": "md",
+                "letter_spacing": "normal"
+              },
+              "blocks": {}
+            },
+            "header_cart_kERFJg": {
+              "type": "_header-cart",
+              "settings": {
+                "type": "icon",
+                "label": "Cart",
+                "badge_type": "primary"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "header_menu_YBCtFf",
+            "header_logo_yY7enM",
+            "header_menu_toggle_XAVCAG",
+            "header_search_znqfRn",
+            "header_account_qTEnbJ",
+            "header_cart_kERFJg"
+          ]
+        }
+      },
+      "name": "t:general.header",
+      "settings": {
+        "section_width": "page_width",
+        "icon_size": 20,
+        "sticky_type": "none",
+        "color_scheme": "scheme-1",
+        "header_overlay": false,
+        "transparent_color_scheme": "scheme-1"
+      }
+    }
+  },
+  "order": [
+    "announcement-bar",
+    "header_i46geD"
+  ]
+}

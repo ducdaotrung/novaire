@@ -1,0 +1,11 @@
+[
+  "blocks/blog-card-description.liquid",
+  "blocks/blog-card.liquid",
+  "blocks/blog-list.liquid",
+  "sections/blog-posts.liquid",
+  "sections/featured-blog-posts.liquid",
+  "templates/article.json",
+  "templates/blog.json",
+  "templates/index.spinel-sync.json",
+  "templates/page.about-us.json"
+]

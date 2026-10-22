@@ -1,0 +1,25 @@
+{% doc %}
+  Render one countdown unit, with optional individual digit tiles.
+  @param {string} unit - Translation and runtime unit key.
+  @param {string} value - Zero-padded display value.
+  @param {boolean} digit_tiles - Use separate digit tiles and an H5 label.
+  @param {string} countdown_style - Countdown layout style.
+{% enddoc %}
+{% assign label_key = 'countdown.' | append: unit %}
+{% if digit_tiles and unit == 'minutes' %}{% assign label_key = 'countdown.minutes_short' %}{% endif %}
+{% if digit_tiles and unit == 'seconds' %}{% assign label_key = 'countdown.seconds_short' %}{% endif %}
+<div class="countdown-timer__unit" data-countdown-unit="{{ unit }}" data-countdown-unit-label="{{ label_key | t | escape }}">
+  <span class="countdown-timer__value" data-countdown-value="{{ unit }}">
+    {%- if digit_tiles -%}
+      {%- assign digits = value | split: '' -%}
+      {%- for digit in digits -%}<span class="countdown-timer__digit">{{ digit }}</span>{%- endfor -%}
+    {%- else -%}{{ value }}{%- endif -%}
+  </span>
+  {% if countdown_style != 'numbers_only' %}
+    {% if digit_tiles %}
+      <h5 class="countdown-timer__label" data-countdown-label>{{ label_key | t }}</h5>
+    {% else %}
+      <span class="countdown-timer__label" data-countdown-label>{{ label_key | t }}</span>
+    {% endif %}
+  {% endif %}
+</div>

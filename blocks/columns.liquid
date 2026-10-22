@@ -1,0 +1,485 @@
+{% doc %}
+  Renders Columns with dedicated Column children.
+  Columns owns column counts, horizontal/vertical gaps, mobile swipe, width
+  and vertical padding. The existing Column kernel owns child content layout.
+{% enddoc %}
+
+{% liquid
+  assign columns_desktop = block.settings.columns_desktop | default: 4 | plus: 0 | floor
+  if columns_desktop < 2 or columns_desktop > 6
+    assign columns_desktop = 4
+  endif
+  assign columns_mobile = block.settings.columns_mobile | default: 1 | plus: 0 | floor
+  if columns_mobile < 1 or columns_mobile > 2
+    assign columns_mobile = 1
+  endif
+%}
+{% capture columns_style %}
+  {% if columns_desktop != 4 %}--columns-count-desktop: {{ columns_desktop }};{% endif %}
+  {% if columns_mobile != 1 %}--columns-count-mobile: {{ columns_mobile }};{% endif %}
+  {% assign gap_horizontal_value = block.settings.gap_horizontal | default: 20 | at_least: 0 | at_most: 100 %}
+  {% if gap_horizontal_value != 20 %}--columns-gap-horizontal: {{ gap_horizontal_value }}px;{% endif %}
+  {% assign gap_vertical_value = block.settings.gap_vertical | default: 30 | at_least: 0 | at_most: 100 %}
+  {% if gap_vertical_value != 30 %}--columns-gap-vertical: {{ gap_vertical_value }}px;{% endif %}
+  {% assign gap_horizontal_mobile_value = block.settings.gap_horizontal_mobile | default: 12 | at_least: 0 | at_most: 50 %}
+  {% if gap_horizontal_mobile_value != 12 %}--columns-gap-horizontal-mobile: {{ gap_horizontal_mobile_value }}px;{% endif %}
+  {% assign gap_vertical_mobile_value = block.settings.gap_vertical_mobile | default: 30 | at_least: 0 | at_most: 50 %}
+  {% unless block.settings.enable_swipe_mobile %}{% if gap_vertical_mobile_value != 30 %}--columns-gap-vertical-mobile: {{ gap_vertical_mobile_value }}px;{% endif %}{% endunless %}
+  {% assign padding_top_value = block.settings.padding_top | default: 0 | at_least: 0 | at_most: 100 %}
+  {% if padding_top_value != 0 %}--columns-padding-top: {{ padding_top_value }}px;{% endif %}
+  {% assign padding_bottom_value = block.settings.padding_bottom | default: 0 | at_least: 0 | at_most: 100 %}
+  {% if padding_bottom_value != 0 %}--columns-padding-bottom: {{ padding_bottom_value }}px;{% endif %}
+  {% assign padding_top_mobile_value = block.settings.padding_top_mobile | default: 0 | at_least: 0 | at_most: 100 %}
+  {% if block.settings.customize_mobile_padding %}--columns-padding-top-mobile: {{ padding_top_mobile_value }}px;{% endif %}
+  {% assign padding_bottom_mobile_value = block.settings.padding_bottom_mobile | default: 0 | at_least: 0 | at_most: 100 %}
+  {% if block.settings.customize_mobile_padding %}--columns-padding-bottom-mobile: {{ padding_bottom_mobile_value }}px;{% endif %}
+  {% if block.settings.width == 'custom' %}--columns-width: {{ block.settings.custom_width | default: 50 | at_least: 10 | at_most: 100 }}%;{% endif %}
+{% endcapture %}
+{% assign columns_style = columns_style | strip %}
+{% if block.settings.enable_swipe_mobile %}<script data-theme-module="{{ 'columns-swipe.js' | asset_url }}"></script>{% endif %}
+<div class="block-columns{% if block.settings.enable_swipe_mobile %} block-columns--swipe-mobile{% endif %}"
+  {% if columns_style != blank %}style="{{ columns_style }}"{% endif %}
+  {% if block.settings.enable_swipe_mobile %}data-columns-swipe tabindex="0" role="region" aria-label="{{ 'accessibility.columns' | t | escape }}"{% endif %}
+  {{ block.shopify_attributes }}>
+  {% if block.settings.enable_swipe_mobile %}<div class="columns-swipe-wrapper">{% endif %}
+  {% content_for 'blocks' %}
+  {% if block.settings.enable_swipe_mobile %}</div>{% endif %}
+</div>
+{% stylesheet %}
+  .block-columns {
+    --columns-count-desktop: 4;
+    --columns-count-mobile: 1;
+    --columns-gap-horizontal: 20px;
+    --columns-gap-vertical: 30px;
+    --columns-gap-horizontal-mobile: 12px;
+    --columns-gap-vertical-mobile: 30px;
+    --columns-width: 100%;
+    --columns-padding-top: 0px;
+    --columns-padding-bottom: 0px;
+    --columns-padding-top-mobile: initial;
+    --columns-padding-bottom-mobile: initial;
+    --columns-current-columns: var(--columns-count-mobile);
+    display: grid;
+    grid-template-columns: repeat(var(--columns-current-columns), minmax(0, 1fr));
+    column-gap: var(--columns-gap-horizontal-mobile);
+    row-gap: var(--columns-gap-vertical-mobile);
+    width: 100%;
+    min-width: 0;
+    padding-block: var(--columns-padding-top-mobile, var(--columns-padding-top)) var(--columns-padding-bottom-mobile, var(--columns-padding-bottom));
+  }
+  .block-columns > .columns-column { width: 100%; min-width: 0; max-width: 100%; }
+  @media (min-width: 768px) {
+    .block-columns {
+      --columns-current-columns: var(--columns-count-desktop);
+      width: var(--columns-width);
+      column-gap: var(--columns-gap-horizontal);
+      row-gap: var(--columns-gap-vertical);
+      padding-block: var(--columns-padding-top) var(--columns-padding-bottom);
+    }
+  }
+  .block-columns--swipe-mobile { display: block; }
+  .columns-swipe-wrapper {
+    display: grid;
+    grid-template-columns: repeat(var(--columns-current-columns), minmax(0, 1fr));
+    column-gap: inherit;
+    row-gap: inherit;
+  }
+  .columns-swipe-wrapper > .columns-column { min-width: 0; max-width: 100%; }
+  @media (max-width: 767.98px) {
+    .block-columns--swipe-mobile {
+      overflow: hidden;
+      row-gap: 0;
+    }
+    .block-columns--swipe-mobile.swiper-initialized > .columns-swipe-wrapper {
+      display: flex;
+      gap: 0;
+      width: 100%;
+      height: 100%;
+      position: relative;
+      box-sizing: content-box;
+      transition-property: transform;
+      transition-timing-function: var(--swiper-wrapper-transition-timing-function, initial);
+      align-items: stretch;
+    }
+    .columns-swipe-wrapper > .swiper-slide {
+      flex-shrink: 0;
+      flex-basis: auto;
+      height: auto;
+    }
+  }
+{% endstylesheet %}
+{% schema %}
+{
+  "name": "t:general.columns",
+  "tag": null,
+  "blocks": [
+    {
+      "type": "_columns-column"
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:general.layout"
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "t:labels.desktop_columns",
+      "options": [
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        },
+        {
+          "value": "5",
+          "label": "5"
+        },
+        {
+          "value": "6",
+          "label": "6"
+        }
+      ],
+      "default": "4"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "t:labels.mobile_columns",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_swipe_mobile",
+      "label": "t:labels.enable_swipe_mobile",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "t:general.gap"
+    },
+    {
+      "type": "range",
+      "id": "gap_horizontal",
+      "label": "t:labels.horizontal_gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "gap_vertical",
+      "label": "t:labels.vertical_gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "gap_horizontal_mobile",
+      "label": "t:labels.columns_horizontal_mobile",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "gap_vertical_mobile",
+      "label": "t:labels.columns_vertical_mobile",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 30,
+      "visible_if": "{{ block.settings.enable_swipe_mobile == false }}"
+    },
+    {
+      "type": "header",
+      "content": "t:general.size"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "t:labels.carousel_desktop_width",
+      "options": [
+        {
+          "value": "fill",
+          "label": "t:options.width.fill"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.width.custom"
+        }
+      ],
+      "default": "fill"
+    },
+    {
+      "type": "range",
+      "id": "custom_width",
+      "label": "t:labels.custom_width",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 50,
+      "visible_if": "{{ block.settings.width == 'custom' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:general.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:labels.top_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:labels.bottom_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "customize_mobile_padding",
+      "label": "t:labels.slide_custom_for_mobile",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "t:labels.mobile_top_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ block.settings.customize_mobile_padding }}"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "t:labels.mobile_bottom_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ block.settings.customize_mobile_padding }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:general.columns",
+      "category": "t:general.layout",
+      "blocks": [
+        {
+          "type": "_columns-column",
+          "settings": {
+            "gap_desktop": 8,
+            "gap_mobile": 8
+          },
+          "blocks": [
+            {
+              "type": "image",
+              "settings": {
+                "image_ratio_desktop": "square",
+                "image_ratio_mobile": "square",
+                "width_desktop": "fill",
+                "width_mobile": "fill"
+              }
+            },
+            {
+              "type": "heading",
+              "settings": {
+                "text": "<p>Heading</p>",
+                "heading_size": "lg",
+                "html_tag": "h3",
+                "width": "fill"
+              }
+            },
+            {
+              "type": "text",
+              "settings": {
+                "text": "<p>Discover the story behind each detail. Introduce your collection and share what makes it special.</p>",
+                "text_size": "sm",
+                "width": "fill"
+              }
+            },
+            {
+              "type": "button",
+              "settings": {
+                "button_label": "Button label",
+                "button_style": "tertiary",
+                "width": "fit"
+              }
+            }
+          ]
+        },
+        {
+          "type": "_columns-column",
+          "settings": {
+            "gap_desktop": 8,
+            "gap_mobile": 8
+          },
+          "blocks": [
+            {
+              "type": "image",
+              "settings": {
+                "image_ratio_desktop": "square",
+                "image_ratio_mobile": "square",
+                "width_desktop": "fill",
+                "width_mobile": "fill"
+              }
+            },
+            {
+              "type": "heading",
+              "settings": {
+                "text": "<p>Heading</p>",
+                "heading_size": "lg",
+                "html_tag": "h3",
+                "width": "fill"
+              }
+            },
+            {
+              "type": "text",
+              "settings": {
+                "text": "<p>Discover the story behind each detail. Introduce your collection and share what makes it special.</p>",
+                "text_size": "sm",
+                "width": "fill"
+              }
+            },
+            {
+              "type": "button",
+              "settings": {
+                "button_label": "Button label",
+                "button_style": "tertiary",
+                "width": "fit"
+              }
+            }
+          ]
+        },
+        {
+          "type": "_columns-column",
+          "settings": {
+            "gap_desktop": 8,
+            "gap_mobile": 8
+          },
+          "blocks": [
+            {
+              "type": "image",
+              "settings": {
+                "image_ratio_desktop": "square",
+                "image_ratio_mobile": "square",
+                "width_desktop": "fill",
+                "width_mobile": "fill"
+              }
+            },
+            {
+              "type": "heading",
+              "settings": {
+                "text": "<p>Heading</p>",
+                "heading_size": "lg",
+                "html_tag": "h3",
+                "width": "fill"
+              }
+            },
+            {
+              "type": "text",
+              "settings": {
+                "text": "<p>Discover the story behind each detail. Introduce your collection and share what makes it special.</p>",
+                "text_size": "sm",
+                "width": "fill"
+              }
+            },
+            {
+              "type": "button",
+              "settings": {
+                "button_label": "Button label",
+                "button_style": "tertiary",
+                "width": "fit"
+              }
+            }
+          ]
+        },
+        {
+          "type": "_columns-column",
+          "settings": {
+            "gap_desktop": 8,
+            "gap_mobile": 8
+          },
+          "blocks": [
+            {
+              "type": "image",
+              "settings": {
+                "image_ratio_desktop": "square",
+                "image_ratio_mobile": "square",
+                "width_desktop": "fill",
+                "width_mobile": "fill"
+              }
+            },
+            {
+              "type": "heading",
+              "settings": {
+                "text": "<p>Heading</p>",
+                "heading_size": "lg",
+                "html_tag": "h3",
+                "width": "fill"
+              }
+            },
+            {
+              "type": "text",
+              "settings": {
+                "text": "<p>Discover the story behind each detail. Introduce your collection and share what makes it special.</p>",
+                "text_size": "sm",
+                "width": "fill"
+              }
+            },
+            {
+              "type": "button",
+              "settings": {
+                "button_label": "Button label",
+                "button_style": "tertiary",
+                "width": "fit"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,92 @@
+{% doc %}
+  Resolves a shared image ratio preset to a CSS aspect-ratio value.
+
+  @param {string} setting - The ratio preset: auto, square, portrait, landscape, wide, ratio_* presets, or custom
+  @param {string} [fallback_ratio] - Ratio used for auto or an unknown preset
+  @param {number} [custom_width] - Custom ratio numerator
+  @param {number} [custom_height] - Custom ratio denominator
+{% enddoc %}
+
+{% liquid
+  assign image_ratio_value = fallback_ratio | default: 'auto'
+
+  case setting
+    when 'ratio_1_1'
+      assign image_ratio_value = '1 / 1'
+    when 'ratio_4_5'
+      assign image_ratio_value = '4 / 5'
+    when 'ratio_5_4'
+      assign image_ratio_value = '5 / 4'
+    when 'ratio_6_7'
+      assign image_ratio_value = '6 / 7'
+    when 'ratio_7_6'
+      assign image_ratio_value = '7 / 6'
+    when 'ratio_5_7'
+      assign image_ratio_value = '5 / 7'
+    when 'ratio_7_5'
+      assign image_ratio_value = '7 / 5'
+    when 'ratio_2_3'
+      assign image_ratio_value = '2 / 3'
+    when 'ratio_3_2'
+      assign image_ratio_value = '3 / 2'
+    when 'ratio_4_3'
+      assign image_ratio_value = '4 / 3'
+    when 'ratio_3_4'
+      assign image_ratio_value = '3 / 4'
+    when 'ratio_2_1'
+      assign image_ratio_value = '2 / 1'
+    when 'ratio_1_2'
+      assign image_ratio_value = '1 / 2'
+    when 'ratio_16_9'
+      assign image_ratio_value = '16 / 9'
+    when 'ratio_9_16'
+      assign image_ratio_value = '9 / 16'
+    when 'ratio_12_5'
+      assign image_ratio_value = '12 / 5'
+    when 'ratio_5_12'
+      assign image_ratio_value = '5 / 12'
+    when 'ratio_48_17'
+      assign image_ratio_value = '48 / 17'
+    when 'ratio_17_48'
+      assign image_ratio_value = '17 / 48'
+    when 'ratio_5_8'
+      assign image_ratio_value = '5 / 8'
+    when 'ratio_8_5'
+      assign image_ratio_value = '8 / 5'
+    when 'square'
+      assign image_ratio_value = '1'
+    when 'portrait'
+      assign image_ratio_value = '4 / 5'
+    when 'landscape'
+      assign image_ratio_value = '4 / 3'
+    when 'wide'
+      assign image_ratio_value = '16 / 9'
+    when 'portrait_6_7'
+      assign image_ratio_value = '6 / 7'
+    when 'portrait_tall'
+      assign image_ratio_value = '5 / 7'
+    when 'portrait_2_3'
+      assign image_ratio_value = '2 / 3'
+    when 'landscape_3_2'
+      assign image_ratio_value = '3 / 2'
+    when 'landscape_5_4'
+      assign image_ratio_value = '5 / 4'
+    when 'wide_2_1'
+      assign image_ratio_value = '2 / 1'
+    when 'custom'
+      assign image_ratio_custom_width = custom_width | default: 16 | plus: 0
+      assign image_ratio_custom_height = custom_height | default: 9 | plus: 0
+      if image_ratio_custom_width <= 0
+        assign image_ratio_custom_width = 16
+      endif
+      if image_ratio_custom_height <= 0
+        assign image_ratio_custom_height = 9
+      endif
+      assign image_ratio_value = image_ratio_custom_width | times: 1.0 | divided_by: image_ratio_custom_height
+    when 'fill_height'
+      assign image_ratio_value = 'auto'
+    when 'original', 'auto'
+    else
+      assign image_ratio_value = fallback_ratio | default: 'auto'
+  endcase
+%}{{ image_ratio_value }}

@@ -1,0 +1,61 @@
+{
+  "theme": 159501156544,
+  "plan": {
+    "role": "content",
+    "placement": "homepage JSON template; reusable custom-section preset",
+    "context": "merchant-selected image backgrounds; placeholders explicitly approved",
+    "ownership": {
+      "section": "existing custom-section shell and preset",
+      "columns": "desktop two columns, mobile one; dynamic children wrap into rows",
+      "banner": "background media, centered content, 28px gap",
+      "heading": "H2 semantics and heading-xl theme token",
+      "button": "shared primary button foundation"
+    },
+    "composition": "custom-section > columns > _columns-column > banner > heading + button",
+    "limits": "No new item limits or max_blocks",
+    "links": "Sample destinations: new products sorted by date; all products. Merchant can replace links."
+  },
+  "files": [
+    "sections/custom-section.liquid",
+    "blocks/_columns-column.liquid",
+    "templates/index.json"
+  ],
+  "checks": {
+    "contract": {
+      "status": "pass",
+      "evidence": "Reuses existing shell, columns, media-card, heading and button; every composed block has a categorized preset"
+    },
+    "schema": {
+      "status": "pass",
+      "evidence": "1597 range settings, 0 violations"
+    },
+    "liquid": {
+      "status": "pass",
+      "evidence": "Theme Check 0 errors, 27 warnings"
+    },
+    "css": {
+      "status": "pass",
+      "evidence": "No new CSS. Existing gap and ratio consumers verified in browser."
+    },
+    "js": {
+      "status": "pass",
+      "evidence": "No added JS; existing native links and dynamic blocks"
+    },
+    "responsive": {
+      "status": "pass",
+      "evidence": "Desktop two 570x455 cards; mobile 390px viewport two stacked 343x429 cards; H2 and computed 28px gap on both"
+    },
+    "accessibility": {
+      "status": "pass",
+      "evidence": "Two H2 headings, real navigation links, visible keyboard focus on CTA"
+    },
+    "theme_editor": {
+      "status": "blocked",
+      "evidence": "Add/remove/reorder/reload not tested in authenticated Editor; dynamic content_for blocks reused unchanged"
+    },
+    "release": {
+      "status": "pass",
+      "evidence": "Three changed theme files read back from target and matched local; all 12 previous sections unchanged; total 13"
+    }
+  }
+}

@@ -1,0 +1,490 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "contact_top_divider": {
+      "type": "custom-section",
+      "name": "Divider",
+      "settings": {
+        "section_width": "full_width",
+        "alignment": "center",
+        "color_scheme": "scheme-1",
+        "content_gap": 0
+      },
+      "blocks": {
+        "divider": {
+          "type": "divider",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "divider"
+      ]
+    },
+    "contact": {
+      "type": "custom-section",
+      "name": "Contact us",
+      "settings": {
+        "section_width": "page_width",
+        "alignment": "center",
+        "color_scheme": "scheme-1",
+        "content_gap": 40,
+        "customize_mobile_gap": true,
+        "content_gap_mobile": 32,
+        "padding_top": 70,
+        "padding_bottom": 90,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 50,
+        "padding_bottom_mobile": 50
+      },
+      "blocks": {
+        "header": {
+          "type": "header",
+          "settings": {
+            "width": "fill",
+            "gap_desktop": 12,
+            "gap_mobile": 12,
+            "inherit_alignment": true
+          },
+          "blocks": {
+            "eyebrow": {
+              "type": "eyebrow",
+              "settings": {
+                "text": "<p>[ NEED HELP ]</p>"
+              }
+            },
+            "heading": {
+              "type": "heading",
+              "settings": {
+                "text": "<p>Contact us</p>",
+                "heading_size": "lg",
+                "html_tag": "h1"
+              }
+            },
+            "text": {
+              "type": "text",
+              "settings": {
+                "text": "<p>Have a question? Fill out the form and we’ll respond within 1–2 business days.</p>",
+                "text_size": "md"
+              }
+            }
+          },
+          "block_order": [
+            "eyebrow",
+            "heading",
+            "text"
+          ]
+        },
+        "form": {
+          "type": "contact-form",
+          "settings": {
+            "gap_desktop": 16,
+            "gap_mobile": 16,
+            "submit_label": "Send message",
+            "button_style": "primary",
+            "show_icon": false,
+            "width_desktop": "fill",
+            "width_mobile": "fill",
+            "limit_width_desktop": true,
+            "max_width_desktop": 700,
+            "limit_width_mobile": false,
+            "require_name": false,
+            "require_message": false
+          },
+          "blocks": {
+            "phone": {
+              "type": "contact-field",
+              "settings": {
+                "field_type": "phone",
+                "label": "Phone number",
+                "required": false
+              }
+            },
+            "topic": {
+              "type": "contact-field",
+              "settings": {
+                "field_type": "dropdown",
+                "label": "Select a topic",
+                "required": false,
+                "options": "Product details; Order & shipping; Size & fit; Returns & exchanges; Wholesale & partnerships; Press & media; Other"
+              }
+            }
+          },
+          "block_order": [
+            "phone",
+            "topic"
+          ]
+        }
+      },
+      "block_order": [
+        "header",
+        "form"
+      ]
+    },
+    "contact_bottom_divider": {
+      "type": "custom-section",
+      "name": "Divider",
+      "settings": {
+        "section_width": "full_width",
+        "alignment": "center",
+        "color_scheme": "scheme-1",
+        "content_gap": 0
+      },
+      "blocks": {
+        "divider": {
+          "type": "divider",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "divider"
+      ]
+    },
+    "instagram": {
+      "type": "custom-section",
+      "name": "Instagram marquee",
+      "settings": {
+        "section_width": "full_width",
+        "alignment": "center",
+        "color_scheme": "scheme-1",
+        "content_gap": 60,
+        "customize_mobile_gap": true,
+        "content_gap_mobile": 30,
+        "padding_top": 100,
+        "padding_bottom": 100,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 60,
+        "padding_bottom_mobile": 60
+      },
+      "blocks": {
+        "header": {
+          "type": "header",
+          "settings": {
+            "width": "fill",
+            "gap_desktop": 12,
+            "gap_mobile": 12,
+            "inherit_alignment": true
+          },
+          "blocks": {
+            "eyebrow": {
+              "type": "eyebrow",
+              "settings": {
+                "text": "<p>[ JOIN US ]</p>"
+              }
+            },
+            "heading": {
+              "type": "heading",
+              "settings": {
+                "text": "<p>Follow us on Instagram @ELVARA</p>",
+                "heading_size": "md",
+                "html_tag": "h2"
+              }
+            }
+          },
+          "block_order": [
+            "eyebrow",
+            "heading"
+          ]
+        },
+        "marquee": {
+          "type": "marquee",
+          "settings": {
+            "gap_desktop": 48,
+            "gap_mobile": 24,
+            "padding_top": 0,
+            "padding_bottom": 20,
+            "animation_speed": 1,
+            "customize_mobile_padding": true,
+            "padding_bottom_mobile": 0,
+            "padding_top_mobile": 0
+          },
+          "blocks": {
+            "item_1": {
+              "type": "marquee-item",
+              "settings": {
+                "direction": "horizontal",
+                "position": "center",
+                "gap_desktop": 48,
+                "gap_mobile": 24,
+                "customize_mobile_alignment": false,
+                "show_overlay": false
+              },
+              "blocks": {
+                "image": {
+                  "type": "image",
+                  "settings": {
+                    "image_ratio_desktop": "custom",
+                    "image_ratio_custom_width_desktop": 4,
+                    "image_ratio_custom_height_desktop": 5,
+                    "width_desktop": "fit",
+                    "limit_width_desktop": true,
+                    "max_width_desktop": 304,
+                    "image_ratio_mobile": "custom",
+                    "image_ratio_custom_width_mobile": 4,
+                    "image_ratio_custom_height_mobile": 5,
+                    "width_mobile": "fit",
+                    "limit_width_mobile": true,
+                    "max_width_mobile": 160,
+                    "corner_radius": "square"
+                  }
+                },
+                "text": {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p><em>@ELVARA</em></p>",
+                    "heading_size": "lg",
+                    "html_tag": "div"
+                  }
+                }
+              },
+              "block_order": [
+                "image",
+                "text"
+              ]
+            },
+            "item_2": {
+              "type": "marquee-item",
+              "settings": {
+                "direction": "horizontal",
+                "position": "center",
+                "gap_desktop": 48,
+                "gap_mobile": 24,
+                "customize_mobile_alignment": false,
+                "show_overlay": false
+              },
+              "blocks": {
+                "image": {
+                  "type": "image",
+                  "settings": {
+                    "image_ratio_desktop": "custom",
+                    "image_ratio_custom_width_desktop": 4,
+                    "image_ratio_custom_height_desktop": 5,
+                    "width_desktop": "fit",
+                    "limit_width_desktop": true,
+                    "max_width_desktop": 304,
+                    "image_ratio_mobile": "custom",
+                    "image_ratio_custom_width_mobile": 4,
+                    "image_ratio_custom_height_mobile": 5,
+                    "width_mobile": "fit",
+                    "limit_width_mobile": true,
+                    "max_width_mobile": 160,
+                    "corner_radius": "square"
+                  }
+                },
+                "text": {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>FOLLOW US</p>",
+                    "heading_size": "lg",
+                    "html_tag": "div"
+                  }
+                }
+              },
+              "block_order": [
+                "image",
+                "text"
+              ]
+            },
+            "item_3": {
+              "type": "marquee-item",
+              "settings": {
+                "direction": "horizontal",
+                "position": "center",
+                "gap_desktop": 48,
+                "gap_mobile": 24,
+                "customize_mobile_alignment": false,
+                "show_overlay": false
+              },
+              "blocks": {
+                "image": {
+                  "type": "image",
+                  "settings": {
+                    "image_ratio_desktop": "custom",
+                    "image_ratio_custom_width_desktop": 4,
+                    "image_ratio_custom_height_desktop": 5,
+                    "width_desktop": "fit",
+                    "limit_width_desktop": true,
+                    "max_width_desktop": 304,
+                    "image_ratio_mobile": "custom",
+                    "image_ratio_custom_width_mobile": 4,
+                    "image_ratio_custom_height_mobile": 5,
+                    "width_mobile": "fit",
+                    "limit_width_mobile": true,
+                    "max_width_mobile": 160,
+                    "corner_radius": "square"
+                  }
+                },
+                "text": {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p><em>@ELVARA</em></p>",
+                    "heading_size": "lg",
+                    "html_tag": "div"
+                  }
+                }
+              },
+              "block_order": [
+                "image",
+                "text"
+              ]
+            },
+            "item_4": {
+              "type": "marquee-item",
+              "settings": {
+                "direction": "horizontal",
+                "position": "center",
+                "gap_desktop": 48,
+                "gap_mobile": 24,
+                "customize_mobile_alignment": false,
+                "show_overlay": false
+              },
+              "blocks": {
+                "image": {
+                  "type": "image",
+                  "settings": {
+                    "image_ratio_desktop": "custom",
+                    "image_ratio_custom_width_desktop": 4,
+                    "image_ratio_custom_height_desktop": 5,
+                    "width_desktop": "fit",
+                    "limit_width_desktop": true,
+                    "max_width_desktop": 304,
+                    "image_ratio_mobile": "custom",
+                    "image_ratio_custom_width_mobile": 4,
+                    "image_ratio_custom_height_mobile": 5,
+                    "width_mobile": "fit",
+                    "limit_width_mobile": true,
+                    "max_width_mobile": 160,
+                    "corner_radius": "square"
+                  }
+                },
+                "text": {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>FOLLOW US</p>",
+                    "heading_size": "lg",
+                    "html_tag": "div"
+                  }
+                }
+              },
+              "block_order": [
+                "image",
+                "text"
+              ]
+            },
+            "item_5": {
+              "type": "marquee-item",
+              "settings": {
+                "direction": "horizontal",
+                "position": "center",
+                "gap_desktop": 48,
+                "gap_mobile": 24,
+                "customize_mobile_alignment": false,
+                "show_overlay": false
+              },
+              "blocks": {
+                "image": {
+                  "type": "image",
+                  "settings": {
+                    "image_ratio_desktop": "custom",
+                    "image_ratio_custom_width_desktop": 4,
+                    "image_ratio_custom_height_desktop": 5,
+                    "width_desktop": "fit",
+                    "limit_width_desktop": true,
+                    "max_width_desktop": 304,
+                    "image_ratio_mobile": "custom",
+                    "image_ratio_custom_width_mobile": 4,
+                    "image_ratio_custom_height_mobile": 5,
+                    "width_mobile": "fit",
+                    "limit_width_mobile": true,
+                    "max_width_mobile": 160,
+                    "corner_radius": "square"
+                  }
+                },
+                "text": {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p><em>@ELVARA</em></p>",
+                    "heading_size": "lg",
+                    "html_tag": "div"
+                  }
+                }
+              },
+              "block_order": [
+                "image",
+                "text"
+              ]
+            },
+            "item_6": {
+              "type": "marquee-item",
+              "settings": {
+                "direction": "horizontal",
+                "position": "center",
+                "gap_desktop": 48,
+                "gap_mobile": 24,
+                "customize_mobile_alignment": false,
+                "show_overlay": false
+              },
+              "blocks": {
+                "image": {
+                  "type": "image",
+                  "settings": {
+                    "image_ratio_desktop": "custom",
+                    "image_ratio_custom_width_desktop": 4,
+                    "image_ratio_custom_height_desktop": 5,
+                    "width_desktop": "fit",
+                    "limit_width_desktop": true,
+                    "max_width_desktop": 304,
+                    "image_ratio_mobile": "custom",
+                    "image_ratio_custom_width_mobile": 4,
+                    "image_ratio_custom_height_mobile": 5,
+                    "width_mobile": "fit",
+                    "limit_width_mobile": true,
+                    "max_width_mobile": 160,
+                    "corner_radius": "square"
+                  }
+                },
+                "text": {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>FOLLOW US</p>",
+                    "heading_size": "lg",
+                    "html_tag": "div"
+                  }
+                }
+              },
+              "block_order": [
+                "image",
+                "text"
+              ]
+            }
+          },
+          "block_order": [
+            "item_1",
+            "item_2",
+            "item_3",
+            "item_4",
+            "item_5",
+            "item_6"
+          ]
+        }
+      },
+      "block_order": [
+        "header",
+        "marquee"
+      ]
+    }
+  },
+  "order": [
+    "contact_top_divider",
+    "contact",
+    "contact_bottom_divider",
+    "instagram"
+  ]
+}

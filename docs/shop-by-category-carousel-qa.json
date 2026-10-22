@@ -1,0 +1,65 @@
+{
+  "store": "beae-duc-k4mqivfe.myshopify.com",
+  "theme": 156415066304,
+  "baselineBackup": "C:\\Users\\User\\AppData\\Local\\Temp/clare-category-20261020/backup",
+  "plan": {
+    "role": "content/navigation",
+    "placement": "templates/index.json: shop_by_category",
+    "shell": "Existing custom-section; new Shop by category carousel preset",
+    "ownership": {
+      "section": "width, alignment, external spacing, background",
+      "carousel": "columns, gaps, controls, pagination, existing editor lifecycle",
+      "slide": "dynamic content wrapper",
+      "card": "4:5 image, overlay, centered content, color scheme",
+      "children": "Heading h3 and shared Button"
+    },
+    "composition": "Header + Carousel > 4 dynamic Slide > Editorial category > Heading h3 + Button",
+    "responsive": "4 desktop, 1 mobile; mobile bullet pagination; existing swipe and keyboard runtime",
+    "limits": "No new max_blocks or per-type limits",
+    "empty": "Existing image placeholders; sample /collections/all destinations"
+  },
+  "checks": {
+    "contract": {
+      "status": "pass"
+    },
+    "schema": {
+      "status": "pass",
+      "ranges": 1493,
+      "compositionBlocks": 19,
+      "categorizedPresets": true
+    },
+    "Liquid": {
+      "status": "pass",
+      "evidence": "Theme Check: no errors"
+    },
+    "CSS": {
+      "status": "pass",
+      "scope": "static width inheritance check; visual QA pending"
+    },
+    "JS": {
+      "status": "blocked",
+      "evidence": "8 shared carousel contract tests pass; 12 existing runtime tests fail in VM harness on unhandled ESM import; runtime source unchanged from pulled baseline"
+    },
+    "responsive": {
+      "status": "blocked",
+      "reason": "Desktop/mobile preview not run"
+    },
+    "accessibility": {
+      "status": "blocked",
+      "reason": "Existing shared heading/button/swiper contracts preserved; live keyboard verification pending"
+    },
+    "themeEditor": {
+      "status": "blocked",
+      "reason": "Add/remove/reorder/reload not verified"
+    },
+    "release": {
+      "status": "blocked",
+      "reason": "Remote upload requires explicit authorization after prior auto-review rejection; original category images and real collection destinations missing"
+    }
+  },
+  "themeCheck": {
+    "errors": 0,
+    "existingWarnings": 6
+  },
+  "migration": "Only saved homepage shop_by_category composed as custom-section; original content retained. Other section instances and original section type preserved."
+}

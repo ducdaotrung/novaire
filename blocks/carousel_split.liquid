@@ -1,0 +1,359 @@
+{% doc %}
+  Renders the one-column carousel owned by Testimonial: split.
+{% enddoc %}
+
+{% liquid
+  assign transition = block.settings.transition_style | default: 'slide'
+  unless transition == 'slide' or transition == 'fade'
+    assign transition = 'slide'
+  endunless
+  assign carousel_id = 'TestimonialSplit-' | append: block.id
+  assign speed = block.settings.autoplay_speed | default: 4 | at_least: 3 | at_most: 7
+  assign delay = speed | times: 1000
+  assign carousel_label = 'general.testimonial_split' | t
+%}
+<script data-theme-module="{{ 'testimonial-split.js' | asset_url }}"></script>
+{% if transition == 'fade' %}
+  <link rel="stylesheet" href="{{ 'swiper-12.2.0-effect-fade.min.css' | asset_url }}" media="print" onload="this.media='all'">
+  <noscript>{{ 'swiper-12.2.0-effect-fade.min.css' | asset_url | stylesheet_tag }}</noscript>
+{% endif %}
+{% capture slides %}{% content_for 'blocks' %}{% endcapture %}
+{% capture carousel_style %}
+  --carousel-padding-top: {{ block.settings.padding_top | default: 0 }}px;
+  --carousel-padding-bottom: {{ block.settings.padding_bottom | default: 0 }}px;
+  {% if block.settings.customize_mobile_padding %}
+    --carousel-padding-top-mobile: {{ block.settings.padding_top_mobile | default: 0 }}px;
+    --carousel-padding-bottom-mobile: {{ block.settings.padding_bottom_mobile | default: 0 }}px;
+  {% endif %}
+{% endcapture %}
+<div class="testimonial-split-carousel" style="{{ carousel_style | strip }}" data-testimonial-split
+  data-transition="{{ transition }}" data-swiper-columns-desktop="1" data-swiper-columns-mobile="1"
+  data-swiper-gap-desktop="0" data-swiper-gap-mobile="0" data-swiper-pagination-desktop="false" data-swiper-pagination-mobile="false"
+  data-carousel-loop="{{ block.settings.loop }}" data-swiper-autoplay="{{ block.settings.autoplay }}"
+  data-swiper-autoplay-pause-on-hover="{{ block.settings.pause_on_hover }}" data-swiper-autoplay-delay="{{ delay }}"
+  {{ block.shopify_attributes }}>
+  {% render 'swiper-carousel', id: carousel_id, content: slides, root_class: 'testimonial-split-carousel__viewport', aria_label: carousel_label, autoplay: block.settings.autoplay, pause_on_hover: block.settings.pause_on_hover, autoplay_delay: delay, show_next_slide_preview: false, show_next_slide_preview_on_mobile: false %}
+</div>
+{% stylesheet %}
+  .testimonial-split-carousel { width: 100%; min-width: 0; padding-block: var(--carousel-padding-top, 0px) var(--carousel-padding-bottom, 0px); }
+  .testimonial-split-carousel__viewport > .swiper-wrapper { column-gap: 0; }
+  .testimonial-split-carousel__viewport { width: 100%; min-width: 0; }
+  .testimonial-split-carousel__viewport > .swiper-wrapper > .testimonial-split-slide { flex-basis: 100%; }
+  .testimonial-split-carousel .swiper:not(.swiper-initialized) .testimonial-split-controls,
+  .testimonial-split-carousel .swiper-initialized .swiper-slide:not(.swiper-slide-active) .testimonial-split-controls { visibility: hidden; }
+  .testimonial-split-carousel.carousel-block--locked .testimonial-split-controls { display: none; }
+  @media (max-width: 767.98px) {
+    .testimonial-split-carousel { padding-block: var(--carousel-padding-top-mobile, var(--carousel-padding-top, 0px)) var(--carousel-padding-bottom-mobile, var(--carousel-padding-bottom, 0px)); }
+  }
+{% endstylesheet %}
+{% schema %}
+{
+  "name": "t:general.carousel",
+  "tag": null,
+  "blocks": [
+    {
+      "type": "slide_split"
+    }
+  ],
+  "settings": [
+    {
+      "type": "select",
+      "id": "transition_style",
+      "label": "Style",
+      "options": [
+        {
+          "value": "slide",
+          "label": "Slide"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        }
+      ],
+      "default": "slide"
+    },
+    {
+      "type": "checkbox",
+      "id": "loop",
+      "label": "Loop slides",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "t:labels.autoplay"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "t:labels.auto_rotate_slides",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "label": "t:labels.pause_on_hover",
+      "default": true,
+      "visible_if": "{{ block.settings.autoplay }}"
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "label": "t:labels.speed",
+      "min": 3,
+      "max": 7,
+      "step": 1,
+      "unit": "s",
+      "default": 4,
+      "visible_if": "{{ block.settings.autoplay }}"
+    },
+    {
+      "type": "header",
+      "content": "t:general.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:labels.top_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:labels.bottom_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "customize_mobile_padding",
+      "label": "t:labels.customize_mobile_padding",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "t:labels.mobile_top_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ block.settings.customize_mobile_padding }}"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "t:labels.mobile_bottom_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ block.settings.customize_mobile_padding }}"
+    }
+  ],
+  "presets": [
+    {
+      "settings": {
+        "loop": false,
+        "transition_style": "fade"
+      },
+      "blocks": [
+        {
+          "type": "slide_split",
+          "blocks": [
+            {
+              "type": "image",
+              "id": "image",
+              "static": true,
+              "settings": {
+                "image_ratio_desktop": "custom",
+                "image_ratio_mobile": "custom",
+                "width_desktop": "fill",
+                "width_mobile": "fill",
+                "image_ratio_custom_width_desktop": 5,
+                "image_ratio_custom_height_desktop": 4,
+                "image_ratio_custom_width_mobile": 5,
+                "image_ratio_custom_height_mobile": 4
+              }
+            },
+            {
+              "type": "group",
+              "id": "content",
+              "static": true,
+              "settings": {
+                "direction": "vertical",
+                "alignment": "left",
+                "width": "fill",
+                "gap_desktop": 0,
+                "gap_mobile": 0,
+                "appearance_type": "inherit",
+                "border_type": "none",
+                "corner_radius": "square",
+                "shadow": "none"
+              },
+              "blocks": [
+                {
+                  "type": "eyebrow",
+                  "settings": {
+                    "text": "<p>FROM THE PEOPLE</p>"
+                  }
+                },
+                {
+                  "type": "icon",
+                  "settings": {
+                    "source": "library",
+                    "icon": "five-stars",
+                    "icon_width": 88,
+                    "custom_mobile": false
+                  }
+                },
+                {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>“The necklace looks amazing! Thank you so much for all of your help and outstanding customer service. What I love most is the attention to detail. Every gem sparkles beautifully honour”</p>",
+                    "heading_size": "display",
+                    "html_tag": "h3",
+                    "width": "fill"
+                  }
+                },
+                {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>— Madison P, London</p>",
+                    "text_size": "sm",
+                    "width": "fill"
+                  }
+                }
+              ]
+            }
+          ],
+          "settings": {
+            "position_horizontal": "center",
+            "horizontal_alignment": "left",
+            "alignment_mobile": "left",
+            "gap_desktop": 0,
+            "gap_mobile": 40,
+            "height": "fill",
+            "appearance_type": "scheme",
+            "color_scheme": "scheme-4",
+            "border_type": "none",
+            "corner_radius": "square",
+            "shadow": "none",
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "padding_left": 0,
+            "padding_right": 0,
+            "customize_mobile_padding": false,
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 0,
+            "padding_left_mobile": 0,
+            "padding_right_mobile": 0
+          }
+        },
+        {
+          "type": "slide_split",
+          "blocks": [
+            {
+              "type": "image",
+              "id": "image",
+              "static": true,
+              "settings": {
+                "image_ratio_desktop": "custom",
+                "image_ratio_mobile": "custom",
+                "width_desktop": "fill",
+                "width_mobile": "fill",
+                "image_ratio_custom_width_desktop": 5,
+                "image_ratio_custom_height_desktop": 4,
+                "image_ratio_custom_width_mobile": 5,
+                "image_ratio_custom_height_mobile": 4
+              }
+            },
+            {
+              "type": "group",
+              "id": "content",
+              "static": true,
+              "settings": {
+                "direction": "vertical",
+                "alignment": "left",
+                "width": "fill",
+                "gap_desktop": 0,
+                "gap_mobile": 0,
+                "appearance_type": "inherit",
+                "border_type": "none",
+                "corner_radius": "square",
+                "shadow": "none"
+              },
+              "blocks": [
+                {
+                  "type": "eyebrow",
+                  "settings": {
+                    "text": "<p>FROM THE PEOPLE</p>"
+                  }
+                },
+                {
+                  "type": "icon",
+                  "settings": {
+                    "source": "library",
+                    "icon": "five-stars",
+                    "icon_width": 88,
+                    "custom_mobile": false
+                  }
+                },
+                {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>\"They created a gorgeous piece for me! I have so much of their jewelry so it was difficult, but they outdid themselves again with something totally different than anything I have!\"</p>",
+                    "heading_size": "display",
+                    "html_tag": "h3",
+                    "width": "fill"
+                  }
+                },
+                {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>— Rachel L, USA</p>",
+                    "text_size": "sm",
+                    "width": "fill"
+                  }
+                }
+              ]
+            }
+          ],
+          "settings": {
+            "position_horizontal": "center",
+            "horizontal_alignment": "left",
+            "alignment_mobile": "left",
+            "gap_desktop": 0,
+            "gap_mobile": 40,
+            "height": "fill",
+            "appearance_type": "scheme",
+            "color_scheme": "scheme-4",
+            "border_type": "none",
+            "corner_radius": "square",
+            "shadow": "none",
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "padding_left": 0,
+            "padding_right": 0,
+            "customize_mobile_padding": false,
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 0,
+            "padding_left_mobile": 0,
+            "padding_right_mobile": 0
+          }
+        }
+      ],
+      "name": "t:general.carousel",
+      "category": "t:general.carousel"
+    }
+  ]
+}
+{% endschema %}

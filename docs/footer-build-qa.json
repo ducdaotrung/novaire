@@ -1,0 +1,31 @@
+{
+  "target": {"store":"beae-duc-k4mqivfe.myshopify.com","theme":159501156544,"branch":"main"},
+  "baseline": "Complete Shopify pull staged in C:/Users/User/AppData/Local/Temp/clare-footer-pull-20261022; prior local theme backed up in C:/Users/User/AppData/Local/Temp/clare-footer-backup-20261022-091351",
+  "plan": {
+    "role":"global navigation surface",
+    "placement":"existing footer section group",
+    "ownership":"footer-group.json owns saved composition; existing blocks own rendering and interactions; Theme Settings owns scheme-2 and social URLs; Shopify owns menus, policies, enabled payments and localization",
+    "composition":"dynamic row: newsletter column then Customer Info, Information and About columns; divider; utility group with copyright/localization and policies/payments",
+    "blocks":"row, _column, heading, text, email-signup, social-links, menu, divider, group, localization, policy-links, payment-icons; existing categorized presets verified",
+    "limits":"No new limits or block types; existing section schema retained",
+    "responsive":"existing row stacks columns on mobile; menu block supplies mobile disclosures; utility groups wrap",
+    "empty_state":"Menus await selection in editor; social icons absent until global URLs configured; policy/payment/language availability follows Shopify data",
+    "runtime":"Existing dynamic content_for blocks and block editor attributes retained; no new JS or CSS"
+  },
+  "changed_files":["sections/footer-group.json","blocks/menu.liquid"],
+  "menu_fix":"An unselected menu no longer silently falls back to main-menu. Existing presets still explicitly select main-menu when desired.",
+  "qa": {
+    "contract":{"status":"pass"},
+    "schema":{"status":"pass","evidence":"Composition types, setting IDs/options and categorized presets checked; all 1521 schema ranges have at most 101 values"},
+    "liquid":{"status":"pass","evidence":"Theme Check: no errors"},
+    "css":{"status":"pass","evidence":"Reuses existing layout and scheme; rendered background rgb(246,240,236), submit rgb(58,58,58)"},
+    "js":{"status":"pass","evidence":"No new JavaScript"},
+    "mobile":{"status":"pass","evidence":"Local preview at 416 CSS pixels; footer has no horizontal overflow; newsletter, menu disclosures, policy and payments inspected"},
+    "desktop":{"status":"blocked","reason":"Available embedded browser viewport is narrow; wide viewport comparison not verified"},
+    "accessibility":{"status":"blocked","reason":"Existing form labels and heading semantics inspected; full keyboard interaction matrix not completed"},
+    "theme_editor":{"status":"blocked","reason":"Add/remove/reorder/save/reload editor flow not verified; dynamic block rendering preserved"},
+    "mcp_validation":{"status":"blocked","reason":"Automatic approval review rejected external validation because it could transmit private theme files; local checks used instead"},
+    "diff":{"status":"pass","evidence":"Changed footer files pass git diff --check; existing synchronized baseline has unrelated whitespace findings"},
+    "release":{"status":"blocked","reason":"Prepared for user visual review; no commit or Git push"}
+  }
+}
