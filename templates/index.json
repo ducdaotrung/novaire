@@ -589,7 +589,7 @@
             "show_next_slide_preview_on_desktop": false,
             "show_next_slide_preview_on_mobile": true,
             "gap_desktop": 20,
-            "gap_mobile": 10,
+            "gap_mobile": 16,
             "width": "fill",
             "custom_width": 50,
             "show_navigation_on_desktop": false,
