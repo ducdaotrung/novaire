@@ -63,8 +63,10 @@ const buildOptions = (carousel, scope) => {
     carousel.querySelector('[data-product-collection-pagination]') ||
     carousel.querySelector('[data-swiper-pagination]');
   const paginationType = getPaginationType(pagination?.dataset.paginationType || carousel.dataset.swiperPaginationType);
+  const productList = carousel.closest('[data-product-list]');
+  const useContainerBreakpoints = productList && !productList.closest('[data-product-list-breakpoints="window"]');
   const options = {
-    ...(carousel.closest('[data-product-list]') ? { breakpointsBase: 'container' } : {}),
+    ...(useContainerBreakpoints ? { breakpointsBase: 'container' } : {}),
     slidesPerView: getMobileSlidesPerView(carousel),
     spaceBetween: toNumber(carousel.dataset.swiperGapMobile, 0),
     breakpoints: {
