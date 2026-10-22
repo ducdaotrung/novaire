@@ -581,65 +581,10 @@
     "shop_by_category": {
       "type": "custom-section",
       "blocks": {
-        "item_12": {
-          "type": "header",
-          "settings": {
-            "width": "fill",
-            "max_width": 750,
-            "customize_mobile_size": true,
-            "width_mobile": "fill",
-            "max_width_mobile": 480,
-            "inherit_alignment": false,
-            "alignment": "center",
-            "customize_mobile_alignment": true,
-            "alignment_mobile": "center",
-            "gap_desktop": 12,
-            "gap_mobile": 8,
-            "padding_top": 0,
-            "padding_bottom": 0,
-            "padding_left": 0,
-            "padding_right": 0,
-            "customize_mobile_padding": false,
-            "padding_top_mobile": 0,
-            "padding_bottom_mobile": 0,
-            "padding_left_mobile": 0,
-            "padding_right_mobile": 0
-          },
-          "blocks": {
-            "item_13": {
-              "type": "heading",
-              "settings": {
-                "text": "<p>SHOP BY CATEGORY</p>",
-                "heading_size": "display",
-                "custom_heading_size": 24,
-                "html_tag": "h2",
-                "text_color": "",
-                "width": "fit",
-                "max_width": 640,
-                "customize_mobile_size": false,
-                "width_mobile": "fit",
-                "max_width_mobile": 480,
-                "padding_top": 0,
-                "padding_bottom": 0,
-                "padding_left": 0,
-                "padding_right": 0,
-                "customize_mobile_padding": false,
-                "padding_top_mobile": 0,
-                "padding_bottom_mobile": 0,
-                "padding_left_mobile": 0,
-                "padding_right_mobile": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "item_13"
-          ]
-        },
         "category_carousel": {
           "type": "carousel",
           "settings": {
-            "columns_desktop": "4",
+            "columns_desktop": "3",
             "columns_mobile": "1",
             "show_next_slide_preview_on_desktop": false,
             "show_next_slide_preview_on_mobile": true,
@@ -669,124 +614,6 @@
             "padding_bottom_mobile": 0
           },
           "blocks": {
-            "slide_item_14": {
-              "type": "slide",
-              "settings": {
-                "direction": "vertical",
-                "alignment": "center",
-                "position": "top",
-                "position_horizontal": "top",
-                "horizontal_alignment": "left",
-                "customize_mobile_alignment": true,
-                "alignment_mobile": "left",
-                "gap_desktop": 0,
-                "gap_mobile": 0,
-                "height": "fit",
-                "border_thickness": 0,
-                "corner_radius": "square",
-                "custom_radius": 20,
-                "shadow": "none",
-                "background_media": "none",
-                "show_overlay": false,
-                "overlay_color": "#00000080",
-                "backdrop_blur": 0,
-                "appearance_type": "scheme",
-                "color_scheme": "scheme-1",
-                "link": "",
-                "open_in_new_tab": false,
-                "padding_top": 0,
-                "padding_bottom": 0,
-                "padding_left": 0,
-                "padding_right": 0,
-                "customize_mobile_padding": false,
-                "padding_top_mobile": 0,
-                "padding_bottom_mobile": 0,
-                "padding_left_mobile": 0,
-                "padding_right_mobile": 0
-              },
-              "blocks": {
-                "item_14": {
-                  "type": "collection-category",
-                  "settings": {
-                    "collection": "best-sellers",
-                    "image": "shopify://shop_images/clare-cat-1.png",
-                    "vertical_alignment": "center",
-                    "customize_mobile_alignment": false,
-                    "vertical_alignment_mobile": "center",
-                    "overlay_color": "#00000033",
-                    "padding_top": 0,
-                    "padding_bottom": 0,
-                    "padding_left": 0,
-                    "padding_right": 0,
-                    "customize_mobile_padding": true,
-                    "padding_top_mobile": 0,
-                    "padding_bottom_mobile": 0,
-                    "padding_left_mobile": 16,
-                    "padding_right_mobile": 16
-                  },
-                  "blocks": {
-                    "item_15": {
-                      "type": "heading",
-                      "settings": {
-                        "text": "<p>WEEKEND OUTFIT</p>",
-                        "heading_size": "display",
-                        "custom_heading_size": 24,
-                        "html_tag": "h3",
-                        "text_color": "#ffffff",
-                        "width": "fit",
-                        "max_width": 640,
-                        "customize_mobile_size": false,
-                        "width_mobile": "fit",
-                        "max_width_mobile": 480,
-                        "padding_top": 0,
-                        "padding_bottom": 0,
-                        "padding_left": 0,
-                        "padding_right": 0,
-                        "customize_mobile_padding": false,
-                        "padding_top_mobile": 0,
-                        "padding_bottom_mobile": 0,
-                        "padding_left_mobile": 0,
-                        "padding_right_mobile": 0
-                      },
-                      "blocks": {}
-                    },
-                    "item_16": {
-                      "type": "button",
-                      "settings": {
-                        "button_label": "SHOP NOW",
-                        "button_link": "shopify://collections/all",
-                        "button_open_in_new_tab": false,
-                        "button_style": "primary",
-                        "show_icon": false,
-                        "icon": "arrow_right",
-                        "icon_position": "after",
-                        "icon_size": "inherit",
-                        "icon_width": 20,
-                        "width": "fit",
-                        "width_mobile": "fit",
-                        "padding_top": 0,
-                        "padding_bottom": 0,
-                        "padding_left": 0,
-                        "padding_right": 0,
-                        "customize_mobile_padding": false,
-                        "padding_top_mobile": 0,
-                        "padding_bottom_mobile": 0,
-                        "padding_left_mobile": 0,
-                        "padding_right_mobile": 0
-                      },
-                      "blocks": {}
-                    }
-                  },
-                  "block_order": [
-                    "item_15",
-                    "item_16"
-                  ]
-                }
-              },
-              "block_order": [
-                "item_14"
-              ]
-            },
             "slide_item_17": {
               "type": "slide",
               "settings": {
@@ -1143,7 +970,6 @@
             }
           },
           "block_order": [
-            "slide_item_14",
             "slide_item_17",
             "slide_item_20",
             "slide_item_23"
@@ -1151,7 +977,6 @@
         }
       },
       "block_order": [
-        "item_12",
         "category_carousel"
       ],
       "name": "Collection list (custom)",
@@ -1801,9 +1626,10 @@
             "navigation_style": "secondary",
             "navigation_icon": "chevron",
             "navigation_behavior": "show_on_hover",
-            "show_pagination_on_desktop": true,
             "pagination_type": "progress_bar",
+            "show_pagination_on_desktop": true,
             "pagination_top_padding_desktop": 50,
+            "show_pagination_on_mobile": true,
             "pagination_top_padding_mobile": 24,
             "pagination_limit_width": true,
             "pagination_max_width": 260,
@@ -3131,12 +2957,25 @@
             "layout": "carousel",
             "columns_desktop": "5",
             "columns_mobile": "1",
-            "gap": 16,
-            "gap_mobile": 12,
             "show_next_slide_preview_on_mobile": true,
             "color_scheme": "",
-            "width": "fill",
-            "max_width": 1600,
+            "gap": 16,
+            "gap_mobile": 12,
+            "show_navigation_on_desktop": true,
+            "show_navigation_on_mobile": true,
+            "navigation_position": "top",
+            "navigation_style": "secondary",
+            "navigation_icon": "chevron",
+            "pagination_type": "progress_bar",
+            "show_pagination_on_desktop": true,
+            "pagination_top_padding_desktop": 50,
+            "show_pagination_on_mobile": false,
+            "pagination_top_padding_mobile": 24,
+            "pagination_limit_width": true,
+            "pagination_max_width": 260,
+            "autoplay": false,
+            "autoplay_pause_on_hover": true,
+            "autoplay_speed": 4,
             "padding_top": 0,
             "padding_bottom": 0,
             "padding_left": 0,
