@@ -40,6 +40,18 @@
   if carousel_custom_width < 20 or carousel_custom_width > 100
     assign carousel_custom_width = 50
   endif
+  assign carousel_width_mode_mobile = carousel_width_mode
+  assign carousel_custom_width_mobile = carousel_custom_width
+  if block.settings.customize_mobile_size
+    assign carousel_width_mode_mobile = block.settings.width_mobile | default: carousel_width_mode
+    unless carousel_width_mode_mobile == 'fill' or carousel_width_mode_mobile == 'custom'
+      assign carousel_width_mode_mobile = carousel_width_mode
+    endunless
+    assign carousel_custom_width_mobile = block.settings.custom_width_mobile | default: carousel_custom_width | plus: 0
+    if carousel_custom_width_mobile < 20 or carousel_custom_width_mobile > 100
+      assign carousel_custom_width_mobile = carousel_custom_width
+    endif
+  endif
 
   assign carousel_navigation_style = block.settings.navigation_style | default: 'primary'
   unless carousel_navigation_style == 'primary' or carousel_navigation_style == 'secondary' or carousel_navigation_style == 'outline'
@@ -145,6 +157,9 @@
     --carousel-padding-bottom-mobile: {{ carousel_padding_bottom_mobile }}px;
   {% endif %}
   {% if carousel_width_mode == 'custom' %}--carousel-width: {{ carousel_custom_width }}%;{% endif %}
+  {% if block.settings.customize_mobile_size %}
+    {% if carousel_width_mode_mobile == 'custom' %}--carousel-width-mobile: {{ carousel_custom_width_mobile }}%;{% else %}--carousel-width-mobile: 100%;{% endif %}
+  {% endif %}
   {% if carousel_pagination_desktop %}--carousel-pagination-padding-desktop: {{ carousel_pagination_padding_desktop }}px;{% endif %}
   {% if carousel_pagination_mobile %}--carousel-pagination-padding-mobile: {{ carousel_pagination_padding_mobile }}px;{% endif %}
   {% if carousel_pagination_desktop %}--swiper-pagination-spacing: {{ carousel_pagination_padding_desktop }}px;{% endif %}
@@ -229,7 +244,7 @@
   [data-carousel-block] .carousel-block__viewport > .swiper-pagination { width: var(--carousel-pagination-width, 100%); margin-block-start: var(--carousel-pagination-padding-desktop, 0px); }
   @media (min-width: 768px) { [data-carousel-block] .swiper-pagination[data-pagination-visible-desktop='false'] { display: none; } }
   @media (max-width: 767.98px) {
-    [data-carousel-block] { padding-block: var(--carousel-padding-top-mobile, var(--carousel-padding-top, 0px)) var(--carousel-padding-bottom-mobile, var(--carousel-padding-bottom, 0px)); }
+    [data-carousel-block] { width: var(--carousel-width-mobile, var(--carousel-width, 100%)); padding-block: var(--carousel-padding-top-mobile, var(--carousel-padding-top, 0px)) var(--carousel-padding-bottom-mobile, var(--carousel-padding-bottom, 0px)); }
     [data-carousel-block] .carousel-block__navigation { display: none; }
     [data-carousel-block] .carousel-block__viewport > .swiper-pagination { margin-block-start: var(--carousel-pagination-padding-mobile, 0px); }
     [data-carousel-block] .swiper-pagination[data-pagination-visible-mobile='false'] { display: none; }
@@ -367,6 +382,40 @@
       "unit": "%",
       "default": 50,
       "visible_if": "{{ block.settings.width == 'custom' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "customize_mobile_size",
+      "label": "t:labels.customize_mobile_size",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "width_mobile",
+      "label": "t:labels.mobile_width",
+      "options": [
+        {
+          "value": "fill",
+          "label": "t:options.width.fill"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.width.custom"
+        }
+      ],
+      "default": "fill",
+      "visible_if": "{{ block.settings.customize_mobile_size }}"
+    },
+    {
+      "type": "range",
+      "id": "custom_width_mobile",
+      "label": "t:labels.custom_width_mobile",
+      "min": 20,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 50,
+      "visible_if": "{{ block.settings.customize_mobile_size and block.settings.width_mobile == 'custom' }}"
     },
     {
       "type": "header",
