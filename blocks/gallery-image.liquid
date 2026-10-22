@@ -46,7 +46,7 @@
   endif
 %}
 
-<div class="gallery-image gallery-image--overlay-{{ show_overlay }}" style="--gallery-social-background: {{ social_background | escape }}; --gallery-social-color: {{ social_color | escape }}; --gallery-overlay-background: {{ overlay_background | escape }}; --gallery-tag-font-size: {{ tag_font_size_token }}; --gallery-tag-font-size-mobile: {{ tag_font_size_mobile_token }};" {{ block.shopify_attributes }}>
+<div class="gallery-image swiper-slide gallery-image--overlay-{{ show_overlay }}" style="--gallery-social-background: {{ social_background | escape }}; --gallery-social-color: {{ social_color | escape }}; --gallery-overlay-background: {{ overlay_background | escape }}; --gallery-tag-font-size: {{ tag_font_size_token }}; --gallery-tag-font-size-mobile: {{ tag_font_size_mobile_token }};" {{ block.shopify_attributes }}>
   {% render 'image', image: block.settings.image, mobile_image: block.settings.mobile_image, alt: block.settings.alt_text, class: 'gallery-image__media', width: 1600, widths: '400, 600, 800, 1200, 1600', sizes: '(min-width: 768px) 25vw, 50vw' %}
   <div class="gallery-image__overlay">
     {% unless social_network == 'none' %}

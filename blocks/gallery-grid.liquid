@@ -13,14 +13,7 @@
   endif
   assign gap = block.settings.gap | default: 32 | plus: 0
   assign gap_mobile = block.settings.gap_mobile | default: 24 | plus: 0
-  assign width = block.settings.width | default: 'fill'
-  assign max_width = block.settings.max_width | default: 1600 | plus: 0
   assign width_value = '100%'
-  if width == 'custom'
-    assign width_value = max_width | append: 'px'
-  elsif width == 'fit'
-    assign width_value = 'fit-content'
-  endif
   assign padding_top = block.settings.padding_top | default: 0 | plus: 0
   assign padding_bottom = block.settings.padding_bottom | default: 0 | plus: 0
   assign padding_left = block.settings.padding_left | default: 0 | plus: 0
@@ -60,7 +53,18 @@
   unless gallery_navigation_icon == 'chevron' or gallery_navigation_icon == 'arrow' or gallery_navigation_icon == 'long_arrow'
     assign gallery_navigation_icon = 'chevron'
   endunless
-  assign gallery_show_pagination = block.settings.show_pagination
+  assign gallery_show_pagination_desktop = block.settings.show_pagination_on_desktop
+  assign gallery_show_pagination_mobile = block.settings.show_pagination_on_mobile
+  if gallery_show_pagination_desktop == nil
+    assign gallery_show_pagination_desktop = block.settings.show_pagination
+  endif
+  if gallery_show_pagination_mobile == nil
+    assign gallery_show_pagination_mobile = block.settings.show_pagination
+  endif
+  assign gallery_show_pagination = false
+  if gallery_show_pagination_desktop or gallery_show_pagination_mobile
+    assign gallery_show_pagination = true
+  endif
   assign gallery_pagination_type = block.settings.pagination_type | default: 'progress_bar'
   unless gallery_pagination_type == 'progress_bar' or gallery_pagination_type == 'bullets'
     assign gallery_pagination_type = 'progress_bar'
@@ -84,7 +88,7 @@
 {% capture gallery_slides %}{% content_for 'blocks' %}{% endcapture %}
 {% capture gallery_pagination %}
   {% if gallery_show_pagination and block.blocks.size > 1 %}
-    {% render 'swiper-pagination', type: gallery_pagination_type, class: 'gallery-grid__pagination', attributes: 'data-pagination-visible-desktop="true" data-pagination-visible-mobile="true"' %}
+    {% render 'swiper-pagination', type: gallery_pagination_type, class: 'gallery-grid__pagination' %}
   {% endif %}
 {% endcapture %}
 {% capture gallery_navigation_center_style %}
@@ -101,7 +105,7 @@
     {% render 'swiper-navigation', position: gallery_navigation_position, style: gallery_navigation_style, icon: gallery_navigation_icon, behavior: 'always', wrapper_class: gallery_navigation_wrapper_class, centered: gallery_navigation_centered, center_style: gallery_navigation_center_style, previous_attribute: 'data-carousel-previous', next_attribute: 'data-carousel-next' %}
   {% endif %}
 {% endcapture %}
-<div class="gallery-grid gallery-grid--{{ gallery_layout }} color-scheme section-color-scope {{ gallery_color_scheme | handleize }}" style="--gallery-grid-columns: {{ columns_desktop }}; --gallery-grid-columns-mobile: {{ columns_mobile }}; --gallery-grid-gap: {{ gap }}px; --gallery-grid-gap-mobile: {{ gap_mobile }}px; --gallery-grid-width: {{ width_value }}; --gallery-grid-padding-top: {{ padding_top }}px; --gallery-grid-padding-bottom: {{ padding_bottom }}px; --gallery-grid-padding-left: {{ padding_left }}px; --gallery-grid-padding-right: {{ padding_right }}px; --gallery-grid-padding-top-mobile: {{ padding_top_mobile }}px; --gallery-grid-padding-bottom-mobile: {{ padding_bottom_mobile }}px; --gallery-grid-padding-left-mobile: {{ padding_left_mobile }}px; --gallery-grid-padding-right-mobile: {{ padding_right_mobile }}px;{% if gallery_show_pagination %} --swiper-pagination-spacing: {{ gallery_pagination_padding_desktop }}px; --swiper-pagination-spacing-mobile: {{ gallery_pagination_padding_mobile }}px;{% if gallery_pagination_type == 'progress_bar' and gallery_pagination_limit_width %} --swiper-pagination-width: min(100%, {{ gallery_pagination_max_width }}px);{% endif %}{% endif %}"{% if gallery_layout == 'carousel' %} data-carousel-block data-swiper-columns-desktop="{{ columns_desktop }}" data-swiper-columns-mobile="{{ columns_mobile }}" data-swiper-gap-desktop="{{ gap }}" data-swiper-gap-mobile="{{ gap_mobile }}" data-swiper-pagination-type="{{ gallery_pagination_type }}" data-swiper-pagination-desktop="{{ gallery_show_pagination }}" data-swiper-pagination-mobile="{{ gallery_show_pagination }}" data-swiper-autoplay="{{ gallery_autoplay }}" data-swiper-autoplay-pause-on-hover="{{ gallery_autoplay_pause_on_hover }}" data-swiper-autoplay-delay="{{ gallery_autoplay_delay }}"{% endif %} {{ block.shopify_attributes }}>
+<div class="gallery-grid gallery-grid--{{ gallery_layout }} color-scheme section-color-scope {{ gallery_color_scheme | handleize }}" style="--gallery-grid-columns: {{ columns_desktop }}; --gallery-grid-columns-mobile: {{ columns_mobile }}; --gallery-grid-gap: {{ gap }}px; --gallery-grid-gap-mobile: {{ gap_mobile }}px; --gallery-grid-width: {{ width_value }}; --gallery-grid-padding-top: {{ padding_top }}px; --gallery-grid-padding-bottom: {{ padding_bottom }}px; --gallery-grid-padding-left: {{ padding_left }}px; --gallery-grid-padding-right: {{ padding_right }}px; --gallery-grid-padding-top-mobile: {{ padding_top_mobile }}px; --gallery-grid-padding-bottom-mobile: {{ padding_bottom_mobile }}px; --gallery-grid-padding-left-mobile: {{ padding_left_mobile }}px; --gallery-grid-padding-right-mobile: {{ padding_right_mobile }}px;{% if gallery_show_pagination %} --swiper-pagination-spacing: {{ gallery_pagination_padding_desktop }}px; --swiper-pagination-spacing-mobile: {{ gallery_pagination_padding_mobile }}px;{% if gallery_pagination_type == 'progress_bar' and gallery_pagination_limit_width %} --swiper-pagination-width: min(100%, {{ gallery_pagination_max_width }}px);{% endif %}{% endif %}"{% if gallery_layout == 'carousel' %} data-carousel-block data-swiper-columns-desktop="{{ columns_desktop }}" data-swiper-columns-mobile="{{ columns_mobile }}" data-swiper-gap-desktop="{{ gap }}" data-swiper-gap-mobile="{{ gap_mobile }}" data-swiper-pagination-type="{{ gallery_pagination_type }}" data-swiper-pagination-desktop="{{ gallery_show_pagination_desktop }}" data-swiper-pagination-mobile="{{ gallery_show_pagination_mobile }}" data-swiper-autoplay="{{ gallery_autoplay }}" data-swiper-autoplay-pause-on-hover="{{ gallery_autoplay_pause_on_hover }}" data-swiper-autoplay-delay="{{ gallery_autoplay_delay }}"{% endif %} {{ block.shopify_attributes }}>
   {% if gallery_layout == 'carousel' %}
     <div class="gallery-grid__carousel-container swiper-carousel__container">
       {% if gallery_navigation_position == 'top' %}{{ gallery_navigation }}{% endif %}
@@ -118,7 +122,7 @@
   .gallery-grid--grid { display: grid; grid-template-columns: repeat(var(--gallery-grid-columns), minmax(0, 1fr)); gap: var(--gallery-grid-gap); }
   .gallery-grid__carousel { overflow: hidden; }
   .gallery-grid__carousel-container { position: relative; width: 100%; min-width: 0; }
-  .gallery-grid__carousel > .swiper-wrapper { column-gap: var(--gallery-grid-gap); }
+  .gallery-grid__carousel > .swiper-wrapper { column-gap: 0; }
   .gallery-grid__carousel > .swiper-wrapper > .swiper-slide { height: auto; }
   .gallery-grid__navigation { position: absolute; z-index: 2; inset: 50% 0 auto; display: flex; justify-content: space-between; padding-inline: 0.5rem; transform: translateY(-50%); pointer-events: none; }
   .gallery-grid__navigation .swiper-nav-button { pointer-events: auto; }
@@ -128,54 +132,53 @@
   .gallery-grid__navigation--top { position: relative; inset: auto; width: max-content; max-width: 100%; gap: 0.5rem; justify-content: flex-start; margin-inline-start: auto; padding: 0 0 0.5rem; transform: none; }
   @media (min-width: 768px) { .gallery-grid [data-pagination-visible-desktop='false'] { display: none; } }
   .gallery-grid__navigation--mobile { display: none; }
-  @media (max-width: 767.98px) { .gallery-grid { padding: var(--gallery-grid-padding-top-mobile) var(--gallery-grid-padding-right-mobile) var(--gallery-grid-padding-bottom-mobile) var(--gallery-grid-padding-left-mobile); } .gallery-grid--grid { grid-template-columns: repeat(var(--gallery-grid-columns-mobile), minmax(0, 1fr)); gap: var(--gallery-grid-gap-mobile); } .gallery-grid__carousel > .swiper-wrapper { column-gap: var(--gallery-grid-gap-mobile); } .gallery-grid__navigation:not(.gallery-grid__navigation--mobile) { display: none; } .gallery-grid__navigation--mobile { display: flex; } .gallery-grid [data-pagination-visible-mobile='false'] { display: none; } }
+  @media (max-width: 767.98px) { .gallery-grid { padding: var(--gallery-grid-padding-top-mobile) var(--gallery-grid-padding-right-mobile) var(--gallery-grid-padding-bottom-mobile) var(--gallery-grid-padding-left-mobile); } .gallery-grid--grid { grid-template-columns: repeat(var(--gallery-grid-columns-mobile), minmax(0, 1fr)); gap: var(--gallery-grid-gap-mobile); } .gallery-grid__carousel > .swiper-wrapper { column-gap: 0; } .gallery-grid__navigation:not(.gallery-grid__navigation--mobile) { display: none; } .gallery-grid__navigation--mobile { display: flex; } .gallery-grid [data-pagination-visible-mobile='false'] { display: none; } }
 {% endstylesheet %}
 
 {% schema %}
 {
   "name": "Gallery",
   "tag": null,
-  "blocks": [{ "type": "gallery-image" }],
+  "blocks": [{"type":"gallery-image"}],
   "settings": [
-    { "type": "header", "content": "t:general.layout" },
-    { "type": "select", "id": "layout", "label": "t:labels.type", "options": [{ "value": "grid", "label": "t:options.gallery_layout.grid" }, { "value": "carousel", "label": "t:options.gallery_layout.carousel" }], "default": "carousel" },
-    { "type": "select", "id": "columns_desktop", "label": "t:labels.desktop_columns", "options": [{ "value": "2", "label": "2" }, { "value": "3", "label": "3" }, { "value": "4", "label": "4" }, { "value": "5", "label": "5" }, { "value": "6", "label": "6" }], "default": "5" },
-    { "type": "select", "id": "columns_mobile", "label": "t:labels.mobile_columns", "options": [{ "value": "1", "label": "1" }, { "value": "2", "label": "2" }], "default": "1" },
-    { "type": "header", "content": "Gap" },
-    { "type": "range", "id": "gap", "label": "Desktop", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 40 },
-    { "type": "range", "id": "gap_mobile", "label": "Mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 24 },
-    { "type": "checkbox", "id": "show_next_slide_preview_on_mobile", "label": "Show next slide preview on mobile", "default": true, "visible_if": "{{ block.settings.layout == 'carousel' }}" },
-    { "type": "header", "content": "t:general.navigation", "visible_if": "{{ block.settings.layout == 'carousel' }}" },
-    { "type": "checkbox", "id": "show_navigation_on_desktop", "label": "t:labels.show_navigation_on_desktop", "default": true, "visible_if": "{{ block.settings.layout == 'carousel' }}" },
-    { "type": "checkbox", "id": "show_navigation_on_mobile", "label": "Show next/previous buttons on mobile", "default": true, "visible_if": "{{ block.settings.layout == 'carousel' }}" },
-    { "type": "select", "id": "navigation_position", "label": "t:labels.position", "options": [{ "value": "outside", "label": "t:options.collection_navigation_position.outside" }, { "value": "inside", "label": "t:options.collection_navigation_position.inside" }, { "value": "top", "label": "t:options.position.top" }], "default": "top", "visible_if": "{{ block.settings.layout == 'carousel' and block.settings.show_navigation_on_desktop }}" },
-    { "type": "select", "id": "navigation_style", "label": "t:labels.style", "options": [{ "value": "primary", "label": "t:options.button_variant.primary" }, { "value": "secondary", "label": "t:options.button_variant.secondary" }, { "value": "outline", "label": "t:options.button_variant.outline" }, { "value": "icon_only", "label": "t:options.button_variant.icon_only" }], "default": "secondary", "visible_if": "{{ block.settings.layout == 'carousel' and block.settings.show_navigation_on_desktop }}" },
-    { "type": "select", "id": "navigation_icon", "label": "t:labels.icon", "options": [{ "value": "chevron", "label": "t:options.collection_navigation_icon.chevron" }, { "value": "arrow", "label": "t:options.collection_navigation_icon.arrow" }, { "value": "long_arrow", "label": "t:options.collection_navigation_icon.long_arrow" }], "default": "chevron", "visible_if": "{{ block.settings.layout == 'carousel' and block.settings.show_navigation_on_desktop }}" },
-    { "type": "header", "content": "t:general.pagination", "visible_if": "{{ block.settings.layout == 'carousel' }}" },
-    { "type": "checkbox", "id": "show_pagination", "label": "t:labels.show_pagination", "default": true, "visible_if": "{{ block.settings.layout == 'carousel' }}" },
-    { "type": "select", "id": "pagination_type", "label": "t:labels.type", "options": [{ "value": "progress_bar", "label": "t:options.collection_pagination.progress_bar" }, { "value": "bullets", "label": "t:options.collection_pagination.bullets" }], "default": "progress_bar", "visible_if": "{{ block.settings.layout == 'carousel' and block.settings.show_pagination }}" },
-    { "type": "range", "id": "pagination_top_padding_desktop", "label": "t:labels.pagination_desktop_top_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 50, "visible_if": "{{ block.settings.layout == 'carousel' and block.settings.show_pagination }}" },
-    { "type": "range", "id": "pagination_top_padding_mobile", "label": "t:labels.pagination_mobile_top_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 24, "visible_if": "{{ block.settings.layout == 'carousel' and block.settings.show_pagination }}" },
-    { "type": "checkbox", "id": "pagination_limit_width", "label": "t:labels.limit_width", "default": true, "visible_if": "{{ block.settings.layout == 'carousel' and block.settings.show_pagination and block.settings.pagination_type == 'progress_bar' }}" },
-    { "type": "range", "id": "pagination_max_width", "label": "t:labels.max_width", "min": 100, "max": 600, "step": 10, "unit": "px", "default": 260, "visible_if": "{{ block.settings.layout == 'carousel' and block.settings.show_pagination and block.settings.pagination_type == 'progress_bar' and block.settings.pagination_limit_width }}" },
-    { "type": "header", "content": "t:labels.autoplay", "visible_if": "{{ block.settings.layout == 'carousel' }}" },
-    { "type": "checkbox", "id": "autoplay", "label": "t:labels.auto_rotate_slides", "default": false, "visible_if": "{{ block.settings.layout == 'carousel' }}" },
-    { "type": "checkbox", "id": "autoplay_pause_on_hover", "label": "t:labels.pause_on_hover", "default": true, "visible_if": "{{ block.settings.layout == 'carousel' and block.settings.autoplay }}" },
-    { "type": "range", "id": "autoplay_speed", "label": "t:labels.speed", "min": 1, "max": 10, "step": 1, "unit": "s", "default": 4, "visible_if": "{{ block.settings.layout == 'carousel' and block.settings.autoplay }}" },
-    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
-    { "type": "select", "id": "width", "label": "Size", "options": [{ "value": "fit", "label": "Fit" }, { "value": "fill", "label": "Fill" }, { "value": "custom", "label": "Custom" }], "default": "fill" },
-    { "type": "range", "id": "max_width", "label": "Maximum width", "min": 320, "max": 1600, "step": 20, "unit": "px", "default": 1600, "visible_if": "{{ block.settings.width == 'custom' }}" },
-    { "type": "header", "content": "t:general.padding" },
-    { "type": "range", "id": "padding_top", "label": "t:labels.top_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
-    { "type": "range", "id": "padding_bottom", "label": "t:labels.bottom_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
-    { "type": "range", "id": "padding_left", "label": "t:labels.left_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
-    { "type": "range", "id": "padding_right", "label": "t:labels.right_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
-    { "type": "checkbox", "id": "customize_mobile_padding", "label": "t:labels.customize_mobile_padding", "default": false },
-    { "type": "range", "id": "padding_top_mobile", "label": "t:labels.mobile_top_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0, "visible_if": "{{ block.settings.customize_mobile_padding }}" },
-    { "type": "range", "id": "padding_bottom_mobile", "label": "t:labels.mobile_bottom_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0, "visible_if": "{{ block.settings.customize_mobile_padding }}" },
-    { "type": "range", "id": "padding_left_mobile", "label": "t:labels.mobile_left_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0, "visible_if": "{{ block.settings.customize_mobile_padding }}" },
-    { "type": "range", "id": "padding_right_mobile", "label": "t:labels.mobile_right_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0, "visible_if": "{{ block.settings.customize_mobile_padding }}" }
+    {"type":"header","content":"t:general.layout"},
+    {"type":"select","id":"layout","label":"t:labels.type","options":[{"value":"grid","label":"t:options.gallery_layout.grid"},{"value":"carousel","label":"t:options.gallery_layout.carousel"}],"default":"carousel"},
+    {"type":"select","id":"columns_desktop","label":"t:labels.desktop_columns","options":[{"value":"2","label":"2"},{"value":"3","label":"3"},{"value":"4","label":"4"},{"value":"5","label":"5"},{"value":"6","label":"6"}],"default":"5"},
+    {"type":"select","id":"columns_mobile","label":"t:labels.mobile_columns","options":[{"value":"1","label":"1"},{"value":"2","label":"2"}],"default":"1"},
+    {"type":"checkbox","id":"show_next_slide_preview_on_mobile","label":"Show next slide preview on mobile","default":true,"visible_if":"{{ block.settings.layout == 'carousel' }}"},
+    {"type":"color_scheme","id":"color_scheme","label":"Color scheme","default":"scheme-1"},
+    {"type":"header","content":"Gap"},
+    {"type":"range","id":"gap","label":"Desktop","min":0,"max":100,"step":1,"unit":"px","default":40},
+    {"type":"range","id":"gap_mobile","label":"Mobile","min":0,"max":100,"step":1,"unit":"px","default":24},
+    {"type":"header","content":"t:general.navigation","visible_if":"{{ block.settings.layout == 'carousel' }}"},
+    {"type":"checkbox","id":"show_navigation_on_desktop","label":"t:labels.show_navigation_on_desktop","default":true,"visible_if":"{{ block.settings.layout == 'carousel' }}"},
+    {"type":"checkbox","id":"show_navigation_on_mobile","label":"Show next/previous buttons on mobile","default":true,"visible_if":"{{ block.settings.layout == 'carousel' }}"},
+    {"type":"select","id":"navigation_position","label":"t:labels.position","options":[{"value":"outside","label":"t:options.collection_navigation_position.outside"},{"value":"inside","label":"t:options.collection_navigation_position.inside"},{"value":"top","label":"t:options.position.top"}],"default":"top","visible_if":"{{ block.settings.layout == 'carousel' and block.settings.show_navigation_on_desktop }}"},
+    {"type":"select","id":"navigation_style","label":"t:labels.style","options":[{"value":"primary","label":"t:options.button_variant.primary"},{"value":"secondary","label":"t:options.button_variant.secondary"},{"value":"outline","label":"t:options.button_variant.outline"},{"value":"icon_only","label":"t:options.button_variant.icon_only"}],"default":"secondary","visible_if":"{{ block.settings.layout == 'carousel' and block.settings.show_navigation_on_desktop }}"},
+    {"type":"select","id":"navigation_icon","label":"t:labels.icon","options":[{"value":"chevron","label":"t:options.collection_navigation_icon.chevron"},{"value":"arrow","label":"t:options.collection_navigation_icon.arrow"},{"value":"long_arrow","label":"t:options.collection_navigation_icon.long_arrow"}],"default":"chevron","visible_if":"{{ block.settings.layout == 'carousel' and block.settings.show_navigation_on_desktop }}"},
+    {"type":"header","content":"t:general.pagination","visible_if":"{{ block.settings.layout == 'carousel' }}"},
+    {"type":"select","id":"pagination_type","label":"t:labels.type","options":[{"value":"progress_bar","label":"t:options.collection_pagination.progress_bar"},{"value":"bullets","label":"t:options.collection_pagination.bullets"}],"default":"progress_bar","visible_if":"{{ block.settings.layout == 'carousel' }}"},
+    {"type":"checkbox","id":"show_pagination_on_desktop","label":"t:labels.show_pagination_on_desktop","default":true,"visible_if":"{{ block.settings.layout == 'carousel' }}"},
+    {"type":"range","id":"pagination_top_padding_desktop","label":"t:labels.carousel_pagination_top_padding","min":0,"max":100,"step":1,"unit":"px","default":50,"visible_if":"{{ block.settings.layout == 'carousel' and block.settings.show_pagination_on_desktop }}"},
+    {"type":"checkbox","id":"show_pagination_on_mobile","label":"t:labels.show_pagination_on_mobile","default":false,"visible_if":"{{ block.settings.layout == 'carousel' }}"},
+    {"type":"range","id":"pagination_top_padding_mobile","label":"t:labels.carousel_pagination_top_padding_mobile","min":0,"max":100,"step":1,"unit":"px","default":24,"visible_if":"{{ block.settings.layout == 'carousel' and block.settings.show_pagination_on_mobile }}"},
+    {"type":"checkbox","id":"pagination_limit_width","label":"t:labels.limit_width","default":true,"visible_if":"{{ block.settings.pagination_type == 'progress_bar' }}"},
+    {"type":"range","id":"pagination_max_width","label":"t:labels.max_width","min":100,"max":600,"step":10,"unit":"px","default":260,"visible_if":"{{ block.settings.pagination_type == 'progress_bar' and block.settings.pagination_limit_width }}"},
+    {"type":"header","content":"t:labels.autoplay","visible_if":"{{ block.settings.layout == 'carousel' }}"},
+    {"type":"checkbox","id":"autoplay","label":"t:labels.auto_rotate_slides","default":false,"visible_if":"{{ block.settings.layout == 'carousel' }}"},
+    {"type":"checkbox","id":"autoplay_pause_on_hover","label":"t:labels.pause_on_hover","default":true,"visible_if":"{{ block.settings.autoplay and block.settings.layout == 'carousel' }}"},
+    {"type":"range","id":"autoplay_speed","label":"t:labels.speed","min":1,"max":10,"step":1,"unit":"s","default":4,"visible_if":"{{ block.settings.autoplay and block.settings.layout == 'carousel' }}"},
+    {"type":"header","content":"t:general.padding"},
+    {"type":"range","id":"padding_top","label":"t:labels.top_padding","min":0,"max":100,"step":1,"unit":"px","default":0},
+    {"type":"range","id":"padding_bottom","label":"t:labels.bottom_padding","min":0,"max":100,"step":1,"unit":"px","default":0},
+    {"type":"range","id":"padding_left","label":"t:labels.left_padding","min":0,"max":100,"step":1,"unit":"px","default":0},
+    {"type":"range","id":"padding_right","label":"t:labels.right_padding","min":0,"max":100,"step":1,"unit":"px","default":0},
+    {"type":"checkbox","id":"customize_mobile_padding","label":"t:labels.customize_mobile_padding","default":false},
+    {"type":"range","id":"padding_top_mobile","label":"t:labels.mobile_top_padding","min":0,"max":100,"step":1,"unit":"px","default":0,"visible_if":"{{ block.settings.customize_mobile_padding }}"},
+    {"type":"range","id":"padding_bottom_mobile","label":"t:labels.mobile_bottom_padding","min":0,"max":100,"step":1,"unit":"px","default":0,"visible_if":"{{ block.settings.customize_mobile_padding }}"},
+    {"type":"range","id":"padding_left_mobile","label":"t:labels.mobile_left_padding","min":0,"max":100,"step":1,"unit":"px","default":0,"visible_if":"{{ block.settings.customize_mobile_padding }}"},
+    {"type":"range","id":"padding_right_mobile","label":"t:labels.mobile_right_padding","min":0,"max":100,"step":1,"unit":"px","default":0,"visible_if":"{{ block.settings.customize_mobile_padding }}"}
   ],
-  "presets": [{ "name": "Gallery grid", "category": "Gallery" }]
+  "presets": [{"name":"Gallery grid","category":"Gallery"}]
 }
 {% endschema %}

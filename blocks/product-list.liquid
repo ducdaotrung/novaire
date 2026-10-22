@@ -695,20 +695,6 @@
       "visible_if": "{{ block.settings.layout_type == 'carousel' or block.settings.layout_type_mobile == 'carousel' }}"
     },
     {
-      "type": "checkbox",
-      "id": "show_pagination_on_desktop",
-      "label": "t:labels.show_pagination",
-      "default": true,
-      "visible_if": "{{ block.settings.layout_type == 'carousel' }}"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_pagination_on_mobile",
-      "label": "Show pagination on mobile",
-      "default": true,
-      "visible_if": "{{ block.settings.layout_type_mobile == 'carousel' }}"
-    },
-    {
       "type": "select",
       "id": "pagination_type",
       "label": "t:labels.type",
@@ -723,36 +709,50 @@
         }
       ],
       "default": "progress_bar",
-      "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_pagination_on_desktop or block.settings.layout_type_mobile == 'carousel' and block.settings.show_pagination_on_mobile }}"
+      "visible_if": "{{ block.settings.layout_type == 'carousel' or block.settings.layout_type_mobile == 'carousel' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pagination_on_desktop",
+      "label": "t:labels.show_pagination_on_desktop",
+      "default": true,
+      "visible_if": "{{ block.settings.layout_type == 'carousel' }}"
     },
     {
       "type": "range",
       "id": "pagination_top_padding_desktop",
-      "label": "t:labels.pagination_desktop_top_padding",
+      "label": "t:labels.carousel_pagination_top_padding",
       "min": 0,
       "max": 100,
       "step": 1,
       "unit": "px",
       "default": 50,
-      "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_pagination_on_desktop or block.settings.layout_type_mobile == 'carousel' and block.settings.show_pagination_on_mobile }}"
+      "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_pagination_on_desktop }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pagination_on_mobile",
+      "label": "t:labels.show_pagination_on_mobile",
+      "default": true,
+      "visible_if": "{{ block.settings.layout_type_mobile == 'carousel' }}"
     },
     {
       "type": "range",
       "id": "pagination_top_padding_mobile",
-      "label": "t:labels.pagination_mobile_top_padding",
+      "label": "t:labels.carousel_pagination_top_padding_mobile",
       "min": 0,
       "max": 100,
       "step": 1,
       "unit": "px",
       "default": 24,
-      "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_pagination_on_desktop or block.settings.layout_type_mobile == 'carousel' and block.settings.show_pagination_on_mobile }}"
+      "visible_if": "{{ block.settings.layout_type_mobile == 'carousel' and block.settings.show_pagination_on_mobile }}"
     },
     {
       "type": "checkbox",
       "id": "pagination_limit_width",
       "label": "t:labels.limit_width",
       "default": true,
-      "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_pagination_on_desktop and block.settings.pagination_type == 'progress_bar' }}"
+      "visible_if": "{{ block.settings.pagination_type == 'progress_bar' }}"
     },
     {
       "type": "range",
@@ -763,7 +763,7 @@
       "step": 10,
       "unit": "px",
       "default": 260,
-      "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_pagination_on_desktop and block.settings.pagination_type == 'progress_bar' and block.settings.pagination_limit_width }}"
+      "visible_if": "{{ block.settings.pagination_type == 'progress_bar' and block.settings.pagination_limit_width }}"
     },
     {
       "type": "header",
@@ -793,7 +793,7 @@
       "step": 1,
       "unit": "s",
       "default": 4,
-      "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.autoplay or block.settings.layout_type_mobile == 'carousel' and block.settings.autoplay }}"
+      "visible_if": "{{ block.settings.autoplay and block.settings.layout_type == 'carousel' or block.settings.autoplay and block.settings.layout_type_mobile == 'carousel' }}"
     }
   ],
   "presets": [
