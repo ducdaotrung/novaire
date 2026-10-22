@@ -673,7 +673,7 @@
                     "item_18": {
                       "type": "heading",
                       "settings": {
-                        "text": "<p>MIDI DRESSES</p>",
+                        "text": "<p>WEEKEND OUTFIT</p>",
                         "heading_size": "display",
                         "custom_heading_size": 24,
                         "html_tag": "h3",
@@ -791,7 +791,7 @@
                     "item_21": {
                       "type": "heading",
                       "settings": {
-                        "text": "<p>FLORAL DRESSES</p>",
+                        "text": "<p>MIDI DRESSES</p>",
                         "heading_size": "display",
                         "custom_heading_size": 24,
                         "html_tag": "h3",
@@ -909,7 +909,7 @@
                     "item_24": {
                       "type": "heading",
                       "settings": {
-                        "text": "<p>OCCASION EDIT</p>",
+                        "text": "<p>CAVATION OUTFIT</p>",
                         "heading_size": "display",
                         "custom_heading_size": 24,
                         "html_tag": "h3",
